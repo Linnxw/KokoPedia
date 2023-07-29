@@ -1,4 +1,4 @@
-export default function Body(){
+export default function Body({detail}){
   return (
   <div className="w-full py-3 font-noto">
   
@@ -12,12 +12,12 @@ export default function Body(){
        </tr>
        <tr className="text-[.6rem]">
          <td className="px-6 py-1">
-          <p className="text-left text-greenPrimary font-bold">Baju Distro Anak</p>
-          <p className="text-[.5rem] text-left">berat : 150 gram</p>
+          <p className="text-left text-greenPrimary font-bold">{detail.nma_produk}</p>
+          <p className="text-[.5rem] text-left">berat : {detail?.berat / 10 / 10} {" " + "kg"}</p>
          </td>
-         <td className="px-2 py-1">8</td>
-         <td className="px-2 py-1">100.000</td>
-         <td className="px-2 py-1">800.000</td>
+         <td className="px-2 py-1">{detail.jumlah}</td>
+         <td className="px-2 py-1">{detail.ttl_jual / detail.jumlah}</td>
+         <td className="px-2 py-1">{detail.ttl_jual}</td>
        </tr>
       </tabel>
     </div>
@@ -26,9 +26,9 @@ export default function Body(){
       <div>
        <tabel>
          <tr>
-          <td>Total harga(1 barang)</td>
+          <td>Total harga( {detail.jumlah} barang)</td>
           <td> : </td>
-          <td className="font-semibold">100.000</td>
+          <td className="font-semibold">{detail.ttl_jual}</td>
          </tr>
          <tr>
           <td>Total ongkit(per kg)</td>
@@ -43,12 +43,12 @@ export default function Body(){
          <tr>
           <td>Total Belanja</td>
           <td> : </td>
-          <td className="font-semibold">100.000</td>
+          <td className="font-semibold">{detail.ttl_jual}</td>
          </tr>
          <tr>
           <td>Total tagihan</td>
           <td> : </td>
-          <td className="font-semibold">100.000</td>
+          <td className="font-semibold">{detail.ttl_jual}</td>
          </tr>
        </tabel>
       </div>

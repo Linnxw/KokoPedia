@@ -1,7 +1,7 @@
 import MenuIcons from "../components/MenuIcons"
 
 import {CiHome} from "react-icons/ci"
-import {IoSpeedometerOutline} from "react-icons/io"
+import {BsSpeedometer2} from "react-icons/bs"
 import {CiCircleList} from "react-icons/ci"
 import {CiTimer} from "react-icons/ci"
 import {CiUser} from "react-icons/ci"
@@ -9,7 +9,7 @@ export default function NavbarLayout(){
   const menu=[
   {
     title:"Dashboard",
-    icon:<IoSpeedometerOutline/>
+    icon:<BsSpeedometer2/>
   },
   {
     title:"Home",

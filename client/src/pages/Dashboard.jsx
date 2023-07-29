@@ -40,7 +40,7 @@ const data=[
   const getProduk=async()=>{
   try{
     const {data}=await axiosJwt.get("http://localhost:5000/produk/me")
-    console.log(data.map(m=>m.nama_produk))
+ 
     console.log(data)
     setProduk(data)
     getTotalPenjualan(data)
@@ -91,25 +91,30 @@ const data=[
     }
   }
   
+  const getDetailHistory=async(id)=>{
+    const {data}=await axiosJwt.get(`http://localhost:5000/beli/riwayat/jual/${id}`)
+    setDetailHistory(data)
+  }
+  
   const handlePopUp=(id)=>{
-  console.log(id)
+    getDetailHistory(id)
     setActive(state=>!state)
     console.log(active)
   }
   return (
   <div className="w-screen min-h-screen bg-whiteSecond pb-14">
-    <header className="p-3 text-blackTxt font-noto text-2xl font-black">
+    <header className="p-3 text-blackTxt font-noto text-2xl md:text-5xl md:p-6 font-black">
      <h1 onClick={()=>dispatch(logout("ok"))}>Dashboard</h1>
     </header>
-    <div className="w-screen flex flex-col gap-3" onClick={getHistory}>
+    <div className="w-screen flex flex-col md:flex-row gap-3 md:justify-center" onClick={getHistory}>
     {
       data.map((m,i)=> <CardStatistics key={i} icon = {m.icon} title = {m.title} data = {m.data} variant = {m.variant}/>)
     }
     </div>
     <NavbarLayout/>
     <ChartShelling produk={produk}/>
-    <TabelHistory history={history} event={handlePopUp}/>
-    <PopUpBox active={active} event={handlePopUp}/>
+    <TabelHistory history={history} event={handlePopUp} detail={detailHistory}/>
+    <PopUpBox active={active} event={handlePopUp} detail={detailHistory}/>
   </div>
   )
 }

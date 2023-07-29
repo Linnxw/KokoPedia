@@ -26,7 +26,7 @@ export const getRiwayatJual=(req,res)=>{
   })
 }
 export const getDetailRiwayatJual=(req,res)=>{
-  db.query("SELECT id,id_produk,nma_produk,tgl,ttl_harga as ttl_jual,jumlah,url,nma_penjual,id_penjual,nma_pembeli,id_pembeli,user_id FROM riwayat_jl",(err,result)=>{
+  db.query(`SELECT r.id,r.id_produk,r.nma_produk,r.tgl,r.ttl_harga as ttl_jual,r.jumlah,r.url,r.nma_penjual,r.id_penjual,r.nma_pembeli,r.id_pembeli,r.user_id,p.berat FROM riwayat_jl as r JOIN produk as p ON (p.id = r.id_produk) WHERE r.id = ${req.params.id}`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
     const newTgl=moment(result[0].tgl).format("YYYY-MM_DD HH:mm:ss")

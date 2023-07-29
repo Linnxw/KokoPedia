@@ -57,8 +57,7 @@ const options = {
 
 // Sisanya tetap sama seperti sebelumnya
 return (
-  <div className="w-[300px] font-noto text-grayTxt bg-whitePrimary rounded font-bold my-3 mx-auto overflow-scroll">
-    <h1 onClick={() => console.log(label)}>Produk terjual</h1>
+  <div className="w-[300px] md:w-[600px] font-noto text-grayTxt bg-whitePrimary rounded font-bold my-3 md:my-5 md:text-4xl mx-auto overflow-scroll gap-1 md:gap-4 flex flex-col">
     <Bar
       height={250}
       data={data}

@@ -1,10 +1,12 @@
-export default function Header(){
+export default function Header({detail}){
+const tanggal=detail?.tgl?.replace("_","-")
+console.log(detail)
   return (
   <div className="font-noto text-blackTxt">
  
     <div className="w-full py-2 px-5 flex items-center justify-end">
-     <div className="text-blackTxt text-sm italic">
-        <p>2023-06-06</p>
+     <div className="text-blackTxt text-[.6rem] italic">
+        <p>{tanggal}</p>
      </div>
     </div>
     
@@ -14,17 +16,12 @@ export default function Header(){
          <tr>
            <td>ID Penjual</td>
            <td> : </td>
-           <td>1001</td>
+           <td>{detail?.id_penjual}</td>
          </tr>
          <tr>
            <td>Nama Penjual</td>
            <td> : </td>
-           <td>Ilham Akbar</td>
-         </tr>
-         <tr>
-           <td>Dikirim dari</td>
-           <td> : </td>
-           <td>Kudus</td>
+           <td>{detail?.nma_penjual}</td>
          </tr>
        </tabel>
      </div>
@@ -33,17 +30,12 @@ export default function Header(){
          <tr>
            <td>ID Pembeli</td>
            <td> : </td>
-           <td>9007</td>
+           <td>{detail?.id_pembeli}</td>
          </tr>
          <tr>
            <td>Nama Pembeli</td>
            <td> : </td>
-           <td>Rina aulia</td>
-         </tr>
-         <tr>
-           <td>Alamat</td>
-           <td> : </td>
-           <td>Bandung</td>
+           <td>{detail?.nma_pembeli}</td>
          </tr>
        </tabel>
      </div>
