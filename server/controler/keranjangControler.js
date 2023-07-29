@@ -1,0 +1,50 @@
+import db from "../config/Database.js"
+
+export const getMyKeranjang=(req,res)=>{
+  const sql=`SELECT k.id as keranjang_id,k.user_id,k.produk_id,k.jumlah,p.nma_produk,p.stok FROM keranjang as k JOIN produk as p ON(p.id = k.produk_id) WHERE k.user_id = (SELECT id FROM user WHERE email = '${req.email}')`
+  
+  db.query(sql,(err,result)=>{
+    if(err) return res.status(500).json({msg:err.message})
+    res.status(200).json(result)
+  })
+}
+
+export const getMyKeranjangById=(req,res)=>{
+   const sql=`SELECT k.id as keranjang_id,k.user_id,k.produk_id,k.jumlah,p.nma_produk,p.stok FROM keranjang as k JOIN produk as p ON(p.id = k.user_id) WHERE k.user_id = (SELECT id FROM user WHERE email = '${req.email}') AND k.id = ${req.params.id}`
+  
+  db.query(sql,(err,result)=>{
+    if(err) return res.status(500).json({msg:err.message})
+    res.status(200).json(result)
+  })
+}
+
+export const addKeranjang=(req,res)=>{
+  const {id,jumlah}=req.query
+  db.query(`SELECT * FROM keranjang WHERE produk_id = ${id}`,(err,result)=>{
+    if(err) return res.status(500).json({msg:err.message})
+    if(!result[0]){
+     const sql=`INSERT INTO keranjang (user_id,produk_id,jumlah) VALUES ((SELECT id FROM user WHERE email = '${req.email}'),${id},${jumlah})`
+     db.query(sql,(err,result)=>{
+      if(err) return res.status(500).json({msg:err.message})
+      res.status(200).json({msg:"berhasil,telah ditambahkan ke keranjang"})
+     })
+    }else{
+      db.query(`UPDATE keranjang SET jumlah = jumlah + ${jumlah} WHERE id = ${result[0].id}`,(err,result)=>{
+       if(err) return res.status(500).json({msg:err.message})
+       res.status(200).json({msg:"berhasil,telah menambahkan keranjang"})
+      })
+    }
+  })
+}
+
+export const deleteMyKeranjang=(req,res)=>{
+  db.query(`SELECT * FROM keranjang WHERE id = ${req.params.id}`,(err,result)=>{
+    if(err) return res.status(500).json({msg:err.message})
+    if(!result[0])
+    return res.staatus(402).json({msg:"keranjang tidak ditemukan"})
+    db.query(`DELETE FROM keranjang WHERE id = ${result[0].id}`,(err,result)=>{
+     if(err) return res.status(500).json({msg:err.message})
+     res.status(200).json({msg:"berhasil menhapus produk dari kernjang"})
+    })
+  })
+}
