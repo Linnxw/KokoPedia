@@ -8,6 +8,7 @@ import TabelHistory from "../components/TabelHistory"
 import {useDispatch,useSelector} from "react-redux"
 import {logout} from "../redux/slice/logoutSlice"
 import {axiosJwt} from "../api/interceptor"
+import {useNavigate} from "react-router-dom"
 import {useState,useEffect} from "react"
 export default function Dashboard(){
 const [produk,setProduk]=useState([])
@@ -18,6 +19,7 @@ const [active,setActive]=useState(false)
 const [detailHistory,setDetailHistory]=useState({})
 const dispatch=useDispatch()
 const {accesToken}=useSelector(prev=>prev.token)
+const navigate=useNavigate()
 useEffect(()=>{
  getProduk()
  getHistory()
@@ -41,7 +43,6 @@ const data=[
   try{
     const {data}=await axiosJwt.get("http://localhost:5000/produk/me")
  
-    console.log(data)
     setProduk(data)
     getTotalPenjualan(data)
     getTotalPendapatan(data)
@@ -84,7 +85,9 @@ const data=[
   const getHistory=async()=>{
     try{
       const response=await axiosJwt.get("http://localhost:5000/beli/riwayat/jual/me")
-      console.log(response.data)
+      if(response.status === 401){
+        navigate("/login")
+      }
       setHistory(response.data)
     }catch(err){
       console.log(err)
