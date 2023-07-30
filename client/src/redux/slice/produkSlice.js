@@ -12,7 +12,7 @@ export const getProduk=createAsycTunk("/getProduk",(thunkAPI)=>{
   try{
     
   }catch(err){
-    console.log(err)
+   
   }
 })
 

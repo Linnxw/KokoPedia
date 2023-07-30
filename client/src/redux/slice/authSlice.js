@@ -17,7 +17,7 @@ export const login=createAsyncThunk("login",async(data,thunkAPI)=>{
     },{
     withCredentials:true
    }) 
-    console.log(response)
+    
     return response.data
   }catch(err){
   console.log(err)
@@ -42,7 +42,6 @@ const authSlice=createSlice({
       state.isLoading=true
     })
   builder.addCase(login.fulfilled,(state,action)=>{
-  console.log(action.payload)
     state.isLoading=false
     state.token=action.payload
   })

@@ -9,7 +9,6 @@ const tokenSlice=createSlice({
   initialState,
   reducers:{
     setToken:(state,action)=>{
-    console.log("masuk setToken",{state,action})
       state.accesToken=action.payload
     }
   }

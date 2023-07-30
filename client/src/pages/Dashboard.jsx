@@ -47,7 +47,7 @@ const data=[
     getTotalPenjualan(data)
     getTotalPendapatan(data)
   }catch(err){
-    console.log("cek",err)
+    console.log(err)
   }
   }
   
@@ -102,7 +102,6 @@ const data=[
   const handlePopUp=(id)=>{
     getDetailHistory(id)
     setActive(state=>!state)
-    console.log(active)
   }
   return (
   <div className="w-screen min-h-screen bg-whiteSecond pb-14">
