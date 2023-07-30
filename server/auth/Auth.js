@@ -50,14 +50,13 @@ export const LogoutUser=(req,res)=>{
  const token=req.cookies.refreshToken
  if(!token)
  return res.status(401).json({msg:"anda belum login"})
- 
  const sql=`SELECT * FROM user WHERE refresh_token = '${token}'`
  
   db.query(sql,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
     if(!result[0])
-    res.status(404).json({msg:"user tidak ditemukan"})
+    return res.status(404).json({msg:"user tidak ditemukan"})
     
     db.query(`UPDATE user SET refresh_token = ${null} WHERE id = ${result[0].id}`,(err,result)=>{
       if(err)

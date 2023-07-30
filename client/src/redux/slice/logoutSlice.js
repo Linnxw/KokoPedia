@@ -8,15 +8,14 @@ const initialState={
 }
 
 export const logout=createAsyncThunk("/logout",async(data,thunkAPI)=>{
-console.log("masuk logout")
   try{
     const token=await axios.get("http://localhost:5000/token",{withCredentials:true})
+    console.log(token)
     const response=await axios.delete("http://localhost:5000/logout",{withCredentials:true},{
-      headers:{
-        'Authorization':`Bearer ${token.data.accesToken}`
-      }
+     headers:{
+      'Authorization':`Bearer ${token.data.accesToken}`
+    }
     })
-
     return response.data.msg
   }catch(err){
     return thunkAPI.rejectWithValue(err.response.data.msg)
@@ -40,13 +39,11 @@ const authSlice=createSlice({
   builder.addCase(logout.fulfilled,(state,action)=>{
     state.isLoading=false
     state.msg=action.payload
-    console.log(action)
   })
   builder.addCase(logout.rejected,(state,action)=>{
     state.isLoading=false
     state.isError=true
     state.msg=action.payload.msg
-    console.log(action)
   })
  }
 })
