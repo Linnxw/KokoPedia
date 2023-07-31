@@ -7,7 +7,6 @@ export const LoginUser=(req,res)=>{
   return res.status(500).json({msg:"anda masih dalam keadaan login"})
   
   const {email,password}=req.body
-  
   if(email.length <= 10)
   return res.status(400).json({msg:"email harus lebih dari 10 karakter"})
   if(password.length < 3)
@@ -15,7 +14,7 @@ export const LoginUser=(req,res)=>{
   
   db.query(`SELECT * FROM user WHERE email LIKE '%${email}%'`,(err,result)=>{
     if(err)
-    return res.status(500).json({msg:err.message})
+    return res.status(500).json({msg:err?.message})
     if(!result[0])
     return res.status(404).json({msg:"email tidak terdaftar"})
     const match=passwordHash.verify(password,result[0].password)
@@ -27,20 +26,23 @@ export const LoginUser=(req,res)=>{
       email:result[0].email,
       role:result[0].role
     }
+  
     const accesToken=jwt.sign(data,process.env.ACCES_TOKEN_SECRET,{
       expiresIn:'40s'
     })
     const refreshToken=jwt.sign(data,process.env.REFRESH_TOKEN_SECRET,{
       expiresIn:'1d'
     })
-    
+   
     res.cookie('refreshToken',refreshToken,{
       maxAge:24*60*60*1000,
       httpOnly:true
     })
+    
     db.query(`UPDATE user SET refresh_token = '${refreshToken}' WHERE id = ${result[0].id}`,(err,result)=>{
       if(err)
-      return res.status(500).json({msg:err.message})
+      return res.status(500).json({msg:err?.message})
+      
       res.status(200).json(accesToken)
     })
   })
@@ -69,7 +71,7 @@ export const LogoutUser=(req,res)=>{
 
 export const getAccesToken=(req,res)=>{
   const refreshToken=req.cookies.refreshToken
-  
+  console.log({refreshToken})
   if(!refreshToken)
   return res.status(401).json({msg:"anda belum login"})
   
