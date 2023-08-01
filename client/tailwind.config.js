@@ -6,7 +6,8 @@ export default {
   ],
   theme: {
     fontFamily:{
-      'noto':['Noto Sans KR']
+      'noto':['Noto Sans KR'],
+      'inter':['Inter']
     },
     extend: {
       colors:{
