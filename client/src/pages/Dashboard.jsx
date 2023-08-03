@@ -105,7 +105,7 @@ const data=[
   }
   return (
   <div className="w-screen min-h-screen bg-whiteSecond pb-14">
-    <header className="p-3 text-blackTxt font-noto text-2xl md:text-5xl md:p-6 font-black">
+    <header className="p-3 text-blackTxt font-noto text-2xl md:text-5xl md:p-6 font-normal">
      <h1 onClick={()=>dispatch(logout("ok"))}>Dashboard</h1>
     </header>
     <div className="w-screen flex flex-col md:flex-row gap-3 md:justify-center" onClick={getHistory}>

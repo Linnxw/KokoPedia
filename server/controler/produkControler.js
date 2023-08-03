@@ -2,9 +2,11 @@ import db from "../config/Database.js"
 import path from "path"
 import fs from "fs"
 export const getProduk=(req,res)=>{
+
   db.query("SELECT p.id,p.nma_produk as nama_produk,p.warna,p.berat,p.harga,p.stok,p.deskripsi,p.terjual,p.user_id,p.kategori_id,u.nama,u.email,u.ft_prfl as foto_profil,u.url as url_foto_profil,k.nma_kategori as nama_kategori,fp.ft_prdk as foto_produk,fp.url as url_foto_produk FROM produk as p JOIN user as u ON (u.id = p.user_id) JOIN kategori as k ON(k.id = p.kategori_id) LEFT JOIN foto_produk as fp ON (fp.produk_id = p.id)",(err,result)=>{
-    if(err)
-    return res.status(500).json({msg:err.message})
+    if(err){
+    return res.status(500).json({msg:err?.message})
+    }
     res.status(200).json(result)
   })
 }
@@ -139,9 +141,15 @@ export const addFotoProduk=(req,res)=>{
 }
 
 export const deleteFotoProduk=(req,res)=>{
-  db.query(`DELETE FROM foto_produk WHERE id = ${req.params.id}`,(err,result)=>{
+  db.query(`SELECT * FROM foto_produk WHERE id = ${req.params.id}`,(err,result1)=>{
+    if(err)
+    return res.status(500).json({msg:err.message})
+    db.query(`DELETE FROM foto_produk WHERE id = ${req.params.id}`,(err,result)=>{
    if(err)
    return res.status(500).json({msg:err.message})
+   fs.unlinkSync(".public/produk/"+result1[0].ft_prdk)
    res.status(200).json({msg:"berhasil hapus data"})
   })
+  })
+  
 }

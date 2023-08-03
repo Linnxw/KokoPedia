@@ -91,7 +91,7 @@ export const getAccesToken=(req,res)=>{
       role:result[0].role
     }
     const accesToken=jwt.sign(data,process.env.ACCES_TOKEN_SECRET,{
-      expiresIn:'40s'
+      expiresIn:'1d'
     })
     res.status(200).json({accesToken})
   })

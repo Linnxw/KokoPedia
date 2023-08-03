@@ -1,14 +1,14 @@
 export default function index(props){
-const {img,title,harga,kota,cashback=false,top=false,terjual}=props
+const {img,title,harga,kota,cashback=false,top=false,terjual,width='w-36',height='28',gap="2px"}=props
   return (
-  <div className="w-36 rounded overflow-hidden font-noto border border-slate-200">
-    <div className="w-full h-28">
+  <div className={`${width} rounded overflow-hidden font-noto border border-slate-200`}>
+    <div className={`w-full ${height}`}>
       <img src={img} className="w-full h-full object-cover"/>
     </div>
-    <div className="flex flex-col items-start p-1 gap-[2px]">
+    <div className={`flex flex-col items-start p-1 ${gap}`}>
     {
       top && (
-      <div className="w-7 h-5 flex items-center justify-end px-2 text-[.7rem] text-whitePrimary rounded-r-full bg-orange-400 font-bold">#{top}</div>
+      <div className="w-7 h-5 flex items-center justify-end px-2 text-[.7rem] text-whitePrimary rounded-r-full bg-[#E1AA1C] font-bold">#{top}</div>
       )
     }
     <div className="text-sm py-1 leading-none text-blackTxt tracking-wide">

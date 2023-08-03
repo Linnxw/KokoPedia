@@ -1,6 +1,26 @@
 import CardProduk from "../CardProduk"
+import NotFound from "../NotFound"
 import gopay from "/gopay.png"
+import {useEffect,useState} from "react"
+import {useDispatch,useSelector} from "react-redux"
+import {getProdukKategory,reset} from "../../redux/slice/produkKategorySlice"
+
 export default function Terlaris(){
+  const [kategory,setKategory]=useState("Laptop")
+  const dispatch=useDispatch()
+  const {produk,msg,isError}=useSelector(state=>state.produkKategory)
+  useEffect(()=>{
+    dispatch(getProdukKategory(kategory))
+    return ()=>{
+      dispatch(reset())
+    }
+  },[])
+  
+  const getByKategory=(kategorys)=>{
+    setKategory(kategorys)
+    dispatch(reset())
+    dispatch(getProdukKategory(kategorys))
+  }
   return (
   <div className="w-screen border-t-2 border-slate-200 font-noto flex flex-col gap-2">
    <div className="w-full px-3 flex justify-between items-center">
@@ -13,14 +33,26 @@ export default function Terlaris(){
    </div>
    <div className="px-3 w-screen overflow-scroll scrollbar">
     <div className="flex inline-block gap-2">
-    <button className="px-3 w-auto py-1 text-md rounded-lg flex border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary">Laptop</button>
-    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary">Earphone</button>
-    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary">Handphone</button>
-    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary">Pakaian</button>
+    <button className="px-3 w-auto py-1 text-md rounded-lg flex border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Laptop")}>Laptop</button>
+    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Earphone")}>Earphone</button>
+    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Handphone")}>Handphone</button>
+    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Pakaian")}>Pakaian</button>
     </div>
    </div>
-   <div className="flex justify-center w-screen">
-    <CardProduk title="LAPTOP ASUS TERBARU" cashback={true} top={1} img={gopay} kota="Kudus" terjual={2000} harga={'3000.000'}/>
+   <div className="flex w-screen overflow-scroll px-1 scrollbar">
+   <div className="flex gap-1 min-w-min">
+   {
+    isError ? (
+      <NotFound/>
+      ):(
+     produk.map((m,i)=>{
+      return (
+      <CardProduk title={m.nma_produk} cashback={true} top={i+1} img={m?.url_foto_produk} kota={"Kudus"} terjual={m.terjual} harga={m.harga}/>
+      )
+   })
+   )
+   }
+   </div>
    </div>
   </div>
   )

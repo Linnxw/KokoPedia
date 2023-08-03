@@ -11,7 +11,7 @@ const handleNavigate=()=>{
  }
 }
   return (
-  <div className="flex h-full w-14 p-1 justify-end flex-col items-center font-noto text-grayTxt font-semibold" onClick={handleNavigate}>
+  <div className="flex h-full w-14 p-1 justify-end flex-col items-center font-noto text-grayTxt" onClick={handleNavigate}>
     <span className="flex items-center justify-center text-2xl text-blackTxtSecond">
       {icon}
     </span>
