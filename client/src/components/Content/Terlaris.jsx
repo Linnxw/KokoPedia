@@ -3,6 +3,7 @@ import NotFound from "../NotFound"
 import gopay from "/gopay.png"
 import {useEffect,useState} from "react"
 import {useDispatch,useSelector} from "react-redux"
+import pro from "/pro.png"
 import {getProdukKategory,reset} from "../../redux/slice/produkKategorySlice"
 
 export default function Terlaris(){
@@ -33,10 +34,10 @@ export default function Terlaris(){
    </div>
    <div className="px-3 w-screen overflow-scroll scrollbar">
     <div className="flex inline-block gap-2">
-    <button className="px-3 w-auto py-1 text-md rounded-lg flex border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Laptop")}>Laptop</button>
-    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Earphone")}>Earphone</button>
-    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Handphone")}>Handphone</button>
-    <button className="px-3 w-auto py-1 text-md rounded-lg border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Pakaian")}>Pakaian</button>
+    <button className="px-3 w-auto py-1 text-md rounded-xl flex border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Laptop")}>Laptop</button>
+    <button className="px-3 w-auto py-1 text-md rounded-xl border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Earphone")}>Earphone</button>
+    <button className="px-3 w-auto py-1 text-md rounded-xl border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Handphone")}>Handphone</button>
+    <button className="px-3 w-auto py-1 text-md rounded-xl border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Pakaian")}>Pakaian</button>
     </div>
    </div>
    <div className="flex w-screen overflow-scroll px-1 scrollbar">
@@ -47,7 +48,7 @@ export default function Terlaris(){
       ):(
      produk.map((m,i)=>{
       return (
-      <CardProduk title={m.nma_produk} cashback={true} top={i+1} img={m?.url_foto_produk} kota={"Kudus"} terjual={m.terjual} harga={m.harga}/>
+      <CardProduk title={m.nama_produk} cashback={true} top={i+1} img={m?.url_foto_produk} kota={"Kudus"} terjual={m.terjual} harga={m.harga} level={pro}/>
       )
    })
    )
