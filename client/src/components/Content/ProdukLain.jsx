@@ -1,6 +1,7 @@
 import {reset,getProduk} from "../../redux/slice/produkSlice"
 import {useDispatch,useSelector} from "react-redux"
 import pro from "/pro.png"
+import NotFound from "../NotFound"
 import CardProduk from "../CardProduk"
 import {useEffect} from "react"
 import img from "/gopay.png"
@@ -12,7 +13,7 @@ export default function ProdukLain(){
     console.log(produk)
   },[dispatch])
   return (
-    <div className="w-screen border-t-2 border-slate-200 font-noto">
+    <div className="w-screen border-t-2 border-slate-200 font-noto mb-14">
      <div className="py-2 px-2 text-blackTxt font-bold">
       <p>Produk Lainnya</p>
      </div>

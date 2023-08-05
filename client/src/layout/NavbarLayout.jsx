@@ -29,7 +29,7 @@ export default function NavbarLayout(){
   },
   ]
   return (
-  <div className="w-screen h-14 border-t-[.5px] border-grayTxt fixed bottom-0 flex items-center bg-whitePrimary justify-evenly">
+  <div className="w-screen h-14 border-t-[.5px] border-grayTxt fixed bottom-0 flex z-40 items-center bg-whitePrimary justify-evenly">
   {
     menu?.map((m,i)=>{
     return <MenuIcons key={i} title={m.title} icon={m.icon}/>

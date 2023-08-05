@@ -6,12 +6,12 @@ const {img,title,variant="text-grayTxt",value,detail} = props
      <div className="text-grayTxt text-[.6rem] flex items-center justify-center">
        <img src={img} className="w-4 h-4 object-contain"/>
      </div>
-     <p className="font-bold text-grayTxt">{title}</p>
+     <p className="text-grayTxt">{title}</p>
     </div>
-    <div className="flex items-center justify-start font-bold text-blackTxt">
+    <div className="flex items-center justify-start text-[.8rem] font-bold text-blackTxt">
       <p>{value}</p>
     </div>
-    <div className={`flex items-center justify-start font-bold ${variant}`}>
+    <div className={`flex items-center justify-start ${variant}`}>
       <p>{detail}</p>
     </div>
   </div>

@@ -5,7 +5,7 @@ import {useEffect,useState} from "react"
 import {useDispatch,useSelector} from "react-redux"
 import pro from "/pro.png"
 import {getProdukKategory,reset} from "../../redux/slice/produkKategorySlice"
-
+import {PiWarningCircleLight} from "react-icons/pi"
 export default function Terlaris(){
   const [kategory,setKategory]=useState("Laptop")
   const dispatch=useDispatch()
@@ -22,6 +22,8 @@ export default function Terlaris(){
     dispatch(reset())
     dispatch(getProdukKategory(kategorys))
   }
+  
+  const pilihanKategory=['Laptop','Earphone','Handphone','Pakaian']
   return (
   <div className="w-screen border-t-2 border-slate-200 font-noto flex flex-col gap-2">
    <div className="w-full px-3 flex justify-between items-center">
@@ -34,21 +36,33 @@ export default function Terlaris(){
    </div>
    <div className="px-3 w-screen overflow-scroll scrollbar">
     <div className="flex inline-block gap-2">
-    <button className="px-3 w-auto py-1 text-md rounded-xl flex border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Laptop")}>Laptop</button>
-    <button className="px-3 w-auto py-1 text-md rounded-xl border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Earphone")}>Earphone</button>
-    <button className="px-3 w-auto py-1 text-md rounded-xl border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Handphone")}>Handphone</button>
-    <button className="px-3 w-auto py-1 text-md rounded-xl border border-grayTxt hover:border-greenPrimary hover:text-greenPrimary" onClick={()=>getByKategory("Pakaian")}>Pakaian</button>
+    {
+      pilihanKategory.map((m,i)=>{
+        return <button className={`px-3 w-auto py-1 text-md rounded-xl flex border border-grayTxt ${m === kategory ? "border-greenPrimary text-greenPrimary" : "text-blackTxt"}`} key={i} onClick={()=>getByKategory(m)}>{m}</button>
+      })
+    }
     </div>
    </div>
-   <div className="flex w-screen overflow-scroll px-1 scrollbar">
+   <div className="flex h-56 w-screen overflow-x-scroll px-1 scrollbar">
    <div className="flex gap-1 min-w-min">
    {
     isError ? (
-      <NotFound/>
+      <NotFound 
+      icon={<PiWarningCircleLight/>} 
+      title="Tidak ada produk dengan kategori terkait"/>
       ):(
      produk.map((m,i)=>{
       return (
-      <CardProduk title={m.nama_produk} cashback={true} top={i+1} img={m?.url_foto_produk} kota={"Kudus"} terjual={m.terjual} harga={m.harga} level={pro}/>
+      <CardProduk
+      key={i}
+      title={m.nama_produk} 
+      cashback={true} 
+      top={i+1}
+      img={m?.url_foto_produk} 
+      kota={"Kudus"} 
+      terjual={m.terjual}
+      harga={m.harga} 
+      level={pro}/>
       )
    })
    )

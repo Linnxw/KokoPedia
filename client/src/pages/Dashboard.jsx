@@ -9,6 +9,7 @@ import {useDispatch,useSelector} from "react-redux"
 import {logout} from "../redux/slice/logoutSlice"
 import {axiosJwt} from "../api/interceptor"
 import {useNavigate} from "react-router-dom"
+import {motion} from "framer-motion"
 import {useState,useEffect} from "react"
 export default function Dashboard(){
 const [produk,setProduk]=useState([])
@@ -104,7 +105,12 @@ const data=[
     setActive(state=>!state)
   }
   return (
-  <div className="w-screen min-h-screen bg-whiteSecond pb-14">
+  <motion.div
+  className="w-screen min-h-screen bg-whiteSecond pb-14"
+  initial={{opacity:0}}
+  animate={{opacity:1}}
+  transition={{duration:0.5}}
+  >
     <header className="p-3 text-blackTxt font-noto text-2xl md:text-5xl md:p-6 font-normal">
      <h1 onClick={()=>dispatch(logout("ok"))}>Dashboard</h1>
     </header>
@@ -113,10 +119,9 @@ const data=[
       data.map((m,i)=> <CardStatistics key={i} icon = {m.icon} title = {m.title} data = {m.data} variant = {m.variant}/>)
     }
     </div>
-    <NavbarLayout/>
     <ChartShelling produk={produk}/>
     <TabelHistory history={history} event={handlePopUp} detail={detailHistory}/>
     <PopUpBox active={active} event={handlePopUp} detail={detailHistory}/>
-  </div>
+  </motion.div>
   )
 }
