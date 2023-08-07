@@ -8,6 +8,7 @@ export default function Category(){
   transition={{duration:0.5}}
   >
     Category
+   <NavbarLayout/>
   </motion.div>
   )
 }

@@ -9,7 +9,7 @@ export default function Acount(){
   transition={{duration:0.5}}
   >
     Acount
-    
+   <NavbarLayout/>
   </motion.div>
   )
 }

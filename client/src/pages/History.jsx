@@ -1,4 +1,5 @@
 import {motion} from "framer-motion"
+import NavbarLayout from "../layout/NavbarLayout"
 export default function History(){
   return (
   <motion.div
@@ -7,6 +8,7 @@ export default function History(){
   transition={{duration:0.5}}
   >
     History
+  <NavbarLayout/>
   </motion.div>
   )
 }

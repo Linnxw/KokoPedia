@@ -71,7 +71,7 @@ export const LogoutUser=(req,res)=>{
 
 export const getAccesToken=(req,res)=>{
   const refreshToken=req.cookies.refreshToken
-  console.log({refreshToken})
+  
   if(!refreshToken)
   return res.status(401).json({msg:"anda belum login"})
   
@@ -91,7 +91,7 @@ export const getAccesToken=(req,res)=>{
       role:result[0].role
     }
     const accesToken=jwt.sign(data,process.env.ACCES_TOKEN_SECRET,{
-      expiresIn:'1d'
+      expiresIn:'40s'
     })
     res.status(200).json({accesToken})
   })

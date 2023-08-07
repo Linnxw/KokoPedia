@@ -11,7 +11,7 @@ export default function Home(){
   >
     <HeaderHome/>
     <Content/>
-    
+    <NavbarLayout/>
   </motion.div>
   )
 }

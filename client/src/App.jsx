@@ -7,8 +7,9 @@ import Category from "./pages/Category"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Search from "./pages/Search"
+import ResultSearch from "./pages/ResultSearch"
 import {AnimatePresence} from "framer-motion"
-import NavbarLayout from "./layout/NavbarLayout"
+
 function App() {
   const location=useLocation()
   return (
@@ -23,9 +24,9 @@ function App() {
      <Route path ="/login" element={<Login/>}/>
      <Route path="/register" element={<Register/>}/>
      <Route path="/search" element={<Search/>}/>
+     <Route path="/search/:search" element={<ResultSearch/>}/>
     </Routes>
    </AnimatePresence>
-    <NavbarLayout/>
     </>
   )
 }

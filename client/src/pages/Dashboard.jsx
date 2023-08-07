@@ -122,6 +122,7 @@ const data=[
     <ChartShelling produk={produk}/>
     <TabelHistory history={history} event={handlePopUp} detail={detailHistory}/>
     <PopUpBox active={active} event={handlePopUp} detail={detailHistory}/>
+    <NavbarLayout/>
   </motion.div>
   )
 }

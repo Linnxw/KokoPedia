@@ -38,7 +38,7 @@ export default function Terlaris(){
     <div className="flex inline-block gap-2">
     {
       pilihanKategory.map((m,i)=>{
-        return <button className={`px-3 w-auto py-1 text-md rounded-xl flex border border-grayTxt ${m === kategory ? "border-greenPrimary text-greenPrimary" : "text-blackTxt"}`} key={i} onClick={()=>getByKategory(m)}>{m}</button>
+        return <button className={`px-3 w-auto py-1 text-md rounded-xl flex border ${m === kategory ? "border-greenPrimary text-greenPrimary" : "text-slate-400 border-slate-400 "}`} key={i} onClick={()=>getByKategory(m)}>{m}</button>
       })
     }
     </div>
