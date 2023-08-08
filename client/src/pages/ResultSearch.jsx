@@ -1,15 +1,21 @@
 import {useParams,useNavigate} from "react-router-dom"
+import CardProduk from "../components/CardProduk"
 import {useProduk} from "../hooks/useProduk"
 import {CiShoppingCart} from "react-icons/ci" 
+import FilterPopUp from "../components/FilterPopUp"
+import pro from "/pro.png"
 import {AiOutlineArrowLeft} from "react-icons/ai"
 import {CiSearch} from "react-icons/ci"
 import {useEffect,useRef,useState} from "react"
 import CategoryList from "../components/CategoryList"
+import InfoAlamat from "../components/InfoAlamat"
 export default function ResultSearch(){
   const {search}=useParams()
   const url=`http://localhost:5000/produk/search?search=${search}`
-  const [data,msg]=useProduk(url)
+  let [data,msg]=useProduk(url)
   const [active,setActive]=useState(false)
+  const [isOpen,setIsOpen]=useState(false)
+  const [produk,setProduk]=useState([])
   const ref=useRef()
   const navigate=useNavigate()
   const [kategory,setKategory]=useState("Cashback")
@@ -32,11 +38,34 @@ useEffect(()=>{
   }
    },[])
   
+  useEffect(()=>{
+    setProduk(data)
+  },[data])
+  
   const handleChange=()=>{
     navigate("/search")
   }
   
-  const listCategory=["Filter","Oficial store","Cahsback","Free ongkir"]
+  const listCategory=["Filter","Oficial store","Cashback","Free ongkir"]
+  const handleFilter=(m)=>{
+  
+    switch (m) {
+      case 'Oficial store':
+        const resultFilter=data.filter(m=>m.role_penjual === "admin")
+        setProduk(resultFilter)
+        break;
+      case 'Cashback':
+        setProduk(data)
+        break;
+      case ('Free ongkir'):
+        setProduk(data)
+        break;
+      case ('Filter'):
+        setIsOpen(prev=>!prev)
+        break;
+    }
+    setKategory(m)
+  }
   return (
   <div className="w-screen">
   <div className={`w-screen flex items-center justify-start font-noto tracking-wide text-blackTxt text-sm p-2 gap-2 z-40 top-0 bg-whitePrimary ${active ? "fixed" : "sticky"}`} ref={ref}>
@@ -58,7 +87,33 @@ useEffect(()=>{
     </div>
     </div>
   </div>
-  <CategoryList data={listCategory} kategory={kategory}/>
+  <CategoryList data={listCategory} kategory={kategory} event={handleFilter}/>
+  <InfoAlamat size="text-sm"/>
+  <div className="w-screen grid grid-cols-2 place-items-center gap-y-2 px-3">
+   {
+     produk ? produk.map(m=>{
+       return (
+        <CardProduk 
+        cashback={true} 
+        title={m.nama_produk}
+        img={m.url_foto_produk} 
+        kota={m.alamat} 
+        terjual={m.terjual} 
+        harga={m.harga} 
+        width="w-40"
+        height="h-36" 
+        gap="gap-1" 
+        level={pro}
+        initial={{y:'100vh',opacity:0}}
+        animate={{y:0,opacity:1}}
+        />
+         )
+     }) : (<p>{msg}</p>)
+   }
+  </div>
+  {
+    isOpen && (<FilterPopUp/>)
+  }
   </div>
   )
 }

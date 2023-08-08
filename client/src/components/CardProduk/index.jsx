@@ -1,7 +1,21 @@
 import freeOngkir2 from "/20230804_212108.png"
+import pro from "/pro.png"
 import {motion} from "framer-motion"
 export default function index(props){
-const {img,level,title,harga,kota,cashback=false,top=false,terjual,width='w-36',height='h-28',gap="gap-2px"}=props
+const {img,
+level,
+title,
+harga,
+kota,
+cashback=false,
+top=false,
+terjual,
+width='w-36',
+height='h-28',
+gap="gap-2px",
+initial={ opacity: 0, x: '-2000px'},
+animate={ opacity: 1, x: 0 }
+}=props
 
 const alamat=(almt)=>{
   let newAlamat=""
@@ -33,8 +47,8 @@ const alamat=(almt)=>{
   return (
     <motion.div
       className={`${width} rounded overflow-hidden font-noto border border-slate-200 box min-h-min static z-10`}
-      initial={{ opacity: 0, x: '-2000px' }}
-      animate={{ opacity: 1, x: 0 }}
+      initial={initial}
+      animate={animate}
       transition={{
         duration: 0.3,
         delay: 0.1,
