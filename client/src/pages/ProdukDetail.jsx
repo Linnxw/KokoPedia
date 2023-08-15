@@ -1,12 +1,14 @@
 import {useState,useEffect,useRef} from "react"
-import {useNavigate} from "react-router-dom"
+import {useNavigate,useParams} from "react-router-dom"
 import {CiShoppingCart} from "react-icons/ci" 
 import {AiOutlineArrowLeft} from "react-icons/ai"
 import {RiCustomerService2Fill} from "react-icons/ri"
 import {PiUsersLight} from "react-icons/pi"
+import UlasanPembeli from "../components/UlasanPembeli"
 import {AiOutlineHeart} from "react-icons/ai"
 import {PiHandbagThin} from "react-icons/pi"
 import {GoChecklist} from "react-icons/go"
+import {convertRupiah} from "../helper/convertRupiah"
 import Button from "../components/Button"
 import MenuBack from "../components/MenuBack"
 import PopUpLayout from "../layout/PopUpLayout"
@@ -17,10 +19,14 @@ import img from "/laptop.webp"
 import {CiSearch} from "react-icons/ci"
 import CardPenjual from "../components/CardPenjual"
 import CardBeli from "../components/CardBeli"
+import {useProduk} from "../hooks/useProduk"
+
 export default function ProdukDetail(){
   const [active,setActive]=useState(false)
   const [isOpen,setIsOpen]=useState(false)
-  const [produk,setProduk]=useState([])
+  const [produk,setProduk]=useState({})
+  const {id}=useParams()
+  const [data,msg]=useProduk(`/produk/${id}`)
   const ref=useRef()
   const navigate=useNavigate()
   const [input,setInput]=useState("")
@@ -38,6 +44,17 @@ useEffect(()=>{
     window.removeEventListener("scroll",handleScroll)
   }
    },[])
+  
+  useEffect(()=>{
+    if(data){
+    const newData={
+      ...data[0],
+      harga:convertRupiah(data[0].harga)
+    }
+    setProduk(newData)
+    console.log(data)
+    }
+  },[data])
   
   const handleChange=()=>{
     navigate("/search")
@@ -73,19 +90,19 @@ useEffect(()=>{
   
   <div className="w-full">
    <div className="full h-80 bg-white">
-     <img src={img} className="w-full h-full object-contain"/>
+     <img src={produk?.url_foto_produk} className="w-full h-full object-contain"/>
    </div>
    <div className="py-4 px-3 flex flex-col gap-y-1 font-inter bg-white">
     <div className="w-full flex justify-between">
      <div className="flex gap-2 items-center font-inter">
-      <h1 className="font-bold text-blackTxt text-xl">Rp400.000</h1>
+      <h1 className="font-bold text-blackTxt text-xl">{produk.harga}</h1>
       <img src={ongkir} className="h-6"/>
     </div>
     <span className="text-2xl text-slate-700"><AiOutlineHeart/></span>
     </div>
-     <p className="text-sm text-slate-700">PC MURAH DENGAN SPESIFIKASI YG SANGAT EDAN</p>
+     <p className="text-sm text-slate-700">{produk?.nama_produk}</p>
      <div className="flex gap-2 pt-2 text-[.8rem]">
-       <p>12 Terjual</p>
+       <p>{produk?.terjual} Terjual</p>
        <p>7 Ulasan</p>
      </div>
    </div>
@@ -97,17 +114,17 @@ useEffect(()=>{
        </tr>
        <tr className="">
          <td className="w-40 py-1 text-slate-500 text-left">Stock Tersisa</td>
-         <td className="text-slate-700">168</td>
+         <td className="text-slate-700">{produk?.stok}</td>
        </tr>
        <tr className="">
          <td className="w-40 py-1 text-slate-500 text-left">Kategori</td>
-         <td className="text-greenPrimary font-semibold hover:underline">Komputer</td>
+         <td className="text-greenPrimary font-semibold hover:underline">{produk?.nama_kategori}</td>
        </tr>
      </tabel>
     </MenuLayout>
     <MenuLayout size="text-md" title="Deskripsi Produk">
      <div className="w-full flex flex-wrap">
-     <p className="font-inter text-sm text-slate-700">Selamat datang di Lapak kami ((C.V Andra jati furniture )) KOMPOSISI. - Terbuat dari bahan kayu Jati perhutani yang sudah di uji kualitas</p>
+     <p className="font-inter text-sm text-slate-700">{produk?.deskripsi}</p>
      </div>
     </MenuLayout>
   </div>
@@ -129,8 +146,9 @@ useEffect(()=>{
         </MenuLayout>
        </div>
     </PopUpLayout>
-    <CardPenjual/>
+    <CardPenjual data={produk}/>
     <CardBeli/>
+    <UlasanPembeli/>
   </div>
     )
 }
