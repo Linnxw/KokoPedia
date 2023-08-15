@@ -4,11 +4,13 @@ import gopay from "/gopay.png"
 import {useEffect,useState} from "react"
 import {useDispatch,useSelector} from "react-redux"
 import pro from "/pro.png"
+import {useNavigate} from "react-router-dom"
 import {getProdukKategory,reset} from "../../redux/slice/produkKategorySlice"
 import {PiWarningCircleLight} from "react-icons/pi"
 export default function Terlaris(){
   const [kategory,setKategory]=useState("Laptop")
   const dispatch=useDispatch()
+  const navigate=useNavigate()
   const {produk,msg,isError}=useSelector(state=>state.produkKategory)
   useEffect(()=>{
     dispatch(getProdukKategory(kategory))
@@ -24,6 +26,10 @@ export default function Terlaris(){
   }
   
   const pilihanKategory=['Laptop','Earphone','Handphone','Pakaian']
+  
+  const handleNavigate=(id)=>{
+    navigate(`/produk/${id}`)
+  }
   return (
   <div className="w-screen border-t-2 border-slate-200 font-noto flex flex-col gap-2">
    <div className="w-full px-3 flex justify-between items-center">
@@ -62,6 +68,8 @@ export default function Terlaris(){
       kota={"Kudus"} 
       terjual={m.terjual}
       harga={m.harga} 
+      id={m.id}
+      event={handleNavigate}
       level={pro}/>
       )
    })

@@ -42,7 +42,7 @@ const data=[
   
   const getProduk=async()=>{
   try{
-    const {data}=await axiosJwt.get("http://localhost:5000/produk/me")
+    const {data}=await axiosJwt.get("/produk/me")
  
     setProduk(data)
     getTotalPenjualan(data)
@@ -85,7 +85,7 @@ const data=[
   
   const getHistory=async()=>{
     try{
-      const response=await axiosJwt.get("http://localhost:5000/beli/riwayat/jual/me")
+      const response=await axiosJwt.get("/beli/riwayat/jual/me")
       if(response.status === 401){
         navigate("/login")
       }
@@ -96,7 +96,7 @@ const data=[
   }
   
   const getDetailHistory=async(id)=>{
-    const {data}=await axiosJwt.get(`http://localhost:5000/beli/riwayat/jual/${id}`)
+    const {data}=await axiosJwt.get(`/beli/riwayat/jual/${id}`)
     setDetailHistory(data)
   }
   

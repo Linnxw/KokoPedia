@@ -40,6 +40,7 @@ useEffect(()=>{
   
   useEffect(()=>{
     setProduk(data)
+    console.log(data)
   },[data])
   
   const handleChange=()=>{
@@ -65,6 +66,41 @@ useEffect(()=>{
         break;
     }
     setKategory(m)
+  }
+ 
+  const handleFilterDetail=(type)=>{
+  console.log("masuk filter")
+    switch (type) {
+      case 'Terlaris':
+        const terlaris=data.sort((a,b)=>b.terjual - a.terjual)
+        setProduk(terlaris)
+        setIsOpen(false)
+        break;
+      case 'Harga Terendah':
+        const hargaTerendah=data.sort((a,b)=>a.harga - b.harga)
+        setProduk(hargaTerendah)
+        setIsOpen(false)
+      break;
+      case 'Harga Tertinggi':
+        const hargaTertinggi=data.sort((a,b)=>b.harga - a.harga)
+        setProduk(hargaTertinggi)
+        setIsOpen(false)
+      break;
+      case 'Mejobo':
+        const lokPilihan=data.filter(m=>m.alamat === "kirig")
+        console.log(lokPilihan)
+        setProduk(lokPilihan)
+        setIsOpen(false)
+      default:
+        // code
+    }
+  }
+  
+  const handleInputTerendah=(e)=>{
+    console.log(e.target.value)
+  }
+  const handleInputTertinggi=(e)=>{
+    console.log(e.target.value)
   }
   return (
   <div className="w-screen">
@@ -112,7 +148,7 @@ useEffect(()=>{
    }
   </div>
   {
-    isOpen && (<FilterPopUp/>)
+    (<FilterPopUp open={isOpen} event={()=>setIsOpen(false)} eventFilter={handleFilterDetail} inputTerendah={handleInputTerendah} inputTertinggi={handleInputTertinggi}/>)
   }
   </div>
   )

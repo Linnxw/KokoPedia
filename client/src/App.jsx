@@ -8,6 +8,8 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Search from "./pages/Search"
 import ResultSearch from "./pages/ResultSearch"
+import ProdukDetail from "./pages/ProdukDetail"
+import Keranjang from "./pages/Keranjang"
 import {AnimatePresence} from "framer-motion"
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
      <Route path="/register" element={<Register/>}/>
      <Route path="/search" element={<Search/>}/>
      <Route path="/search/:search" element={<ResultSearch/>}/>
+     <Route path="/keranjang" element={<Keranjang/>}/>
+     <Route path="/produk/:id" element={<ProdukDetail/>}/>
     </Routes>
    </AnimatePresence>
     </>

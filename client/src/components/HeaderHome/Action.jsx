@@ -3,7 +3,7 @@ import {CiMail} from "react-icons/ci"
 import {CiShoppingCart} from "react-icons/ci" 
 import {useRef,useEffect,useState} from "react"
 import {useNavigate} from "react-router-dom"
-export default function Action(){
+export default function Action({event}){
 const [active,setActive]=useState(false)
 const ref=useRef()
 const navigate=useNavigate()
@@ -37,8 +37,8 @@ useEffect(()=>{
     
     <div className="text-xl flex items-center justify-evenly w-2/5">
     <span className="grid place-items-center"><CiMail/></span>
-    <span className="grid place-items-center"><CiShoppingCart/></span>
-    <div className="flex items-center gap-1 w-4 h-6 flex-col justify-center">
+    <span className="grid place-items-center" onClick={()=>navigate("/keranjang")}><CiShoppingCart/></span>
+    <div className="flex items-center gap-1 w-4 h-6 flex-col justify-center" onClick={event}>
       <span className={`${active ? "bg-blackTxt" : "bg-whitePrimary"} inline-block w-full h-[1px] rounded`}></span>
       <span className={`${active ? "bg-blackTxt" : "bg-whitePrimary"} inline-block w-full h-[1px] rounded`}></span>
       <span className={`${active ? "bg-blackTxt" : "bg-whitePrimary"} inline-block w-full h-[1px] rounded`}></span>

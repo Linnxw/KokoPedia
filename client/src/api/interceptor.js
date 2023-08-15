@@ -30,6 +30,7 @@ const checkAccessToken = async () => {
 };
 
 export const axiosJwt = axios.create({
+  baseURL:"http://localhost:5000",
   withCredentials:true
 });
 

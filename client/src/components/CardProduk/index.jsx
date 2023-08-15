@@ -47,6 +47,7 @@ const alamat=(almt)=>{
   return (
     <motion.div
       className={`${width} rounded overflow-hidden font-noto border border-slate-200 box min-h-min static z-10`}
+      onClick={()=>props.event(props.id)}
       initial={initial}
       animate={animate}
       transition={{
