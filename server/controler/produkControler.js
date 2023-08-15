@@ -7,6 +7,7 @@ export const getProduk=(req,res)=>{
     if(err){
     return res.status(500).json({msg:err?.message})
     }
+  
     res.status(200).json(result)
   })
 }

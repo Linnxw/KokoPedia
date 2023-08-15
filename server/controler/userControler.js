@@ -18,7 +18,7 @@ export const getMe=(req,res)=>{
       if(err){
         console.log(err)
       }
-      res.status(200).json(field)
+      res.status(200).json(field[0])
     })
 
 }

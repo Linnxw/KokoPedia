@@ -1,7 +1,7 @@
 import db from "../config/Database.js"
 
 export const getMyKeranjang=(req,res)=>{
-  const sql=`SELECT k.id as keranjang_id,k.user_id,k.produk_id,k.jumlah,p.nma_produk,p.stok FROM keranjang as k JOIN produk as p ON(p.id = k.produk_id) WHERE k.user_id = (SELECT id FROM user WHERE email = '${req.email}')`
+  const sql=`SELECT k.id as keranjang_id,k.user_id,u.nama,u.url as url_foto_profile,u.alamat,k.produk_id,k.jumlah,p.nma_produk,p.stok,p.harga,fp.ft_prdk as foto_produk,fp.url as url_foto_produk FROM keranjang as k JOIN produk as p ON(p.id = k.produk_id) LEFT JOIN foto_produk as fp ON(fp.produk_id = p.id) JOIN user as u ON(u.id = p.user_id) WHERE k.user_id = (SELECT id FROM user WHERE email = '${req.email}')`
   
   db.query(sql,(err,result)=>{
     if(err) return res.status(500).json({msg:err.message})
