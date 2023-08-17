@@ -18,10 +18,9 @@ export default function Home(){
   
   const handlePopUp=()=>{
     setIsOpen(prev=>!prev)
-    console.log("isOpened")
   }
   
-  return (
+return (
  <motion.div 
   initial={{opacity:0}}
   animate={{opacity:1}}
@@ -43,7 +42,9 @@ export default function Home(){
           <Button title="Kategori" icon={<PiHandbagThin/>}/>
         </MenuLayout>
         <MenuLayout title="Pusat Bantuan">
-          <Button title="Hubingi Kami" icon={<RiCustomerService2Fill/>}/>
+          <Button 
+          title="Hubingi Kami" 
+          icon={<RiCustomerService2Fill/>}/>
         </MenuLayout>
        </div>
     </PopUpLayout>

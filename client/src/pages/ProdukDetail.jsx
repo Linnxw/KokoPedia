@@ -20,13 +20,15 @@ import {CiSearch} from "react-icons/ci"
 import CardPenjual from "../components/CardPenjual"
 import CardBeli from "../components/CardBeli"
 import {useProduk} from "../hooks/useProduk"
-
+import {motion} from "framer-motion"
+import {instance} from "../api/instance"
 export default function ProdukDetail(){
   const [active,setActive]=useState(false)
   const [isOpen,setIsOpen]=useState(false)
   const [produk,setProduk]=useState({})
   const {id}=useParams()
   const [data,msg]=useProduk(`/produk/${id}`)
+  const [coment,setComent]=useState([])
   const ref=useRef()
   const navigate=useNavigate()
   const [input,setInput]=useState("")
@@ -56,8 +58,22 @@ useEffect(()=>{
     }
   },[data])
   
+  useEffect(()=>{
+    getComent()
+  },[])
+  
+  const getComent=async()=>{
+    try{
+      const {data}=await instance.get("/penilaian/"+id)
+      console.log(data)
+      setComent(data)
+    }catch(err){
+      console.log(err)
+    }
+  }
+  
   const handleChange=()=>{
-    navigate("/search")
+    navigate("/home")
   }
   
   const handleInputTerendah=(e)=>{
@@ -70,7 +86,7 @@ useEffect(()=>{
   <div className="w-screen overflow-x-hidden pb-14">
   <div className={`w-screen translateZ(0) flex ${active ? "bg-whitePrimary" : "bg-transparent"} items-center justify-start font-noto tracking-wide text-blackTxt text-sm p-2 gap-2 z-40 top-0 fixed`} ref={ref}>
     <span className="text-3xl flex items-center justify-center text-slate-400" onClick={handleChange}><AiOutlineArrowLeft/></span>
-    <div className="flex items-center text-grayTxt w-3/5 relative flex items-center justify-start" onClick={handleChange}>
+    <div className="flex items-center text-grayTxt w-3/5 relative flex items-center justify-start" onClick={()=>navigate("/search")}>
       <input type="teks" className="absolute left-1 bg-transparent flex items-center text-slate-400 peer-focus " value={input}/>
       <div className={`absolute left-1 flex items-center ${input.length > 0 && "hidden"} peer-focus:hidden`}>
         <span className="text-xl grid place-items-center"><CiSearch/></span>
@@ -148,7 +164,11 @@ useEffect(()=>{
     </PopUpLayout>
     <CardPenjual data={produk}/>
     <CardBeli/>
-    <UlasanPembeli/>
+    {
+      coment?.map((m,i)=>{
+      return <UlasanPembeli data={m}/>
+      })
+    }
   </div>
     )
 }

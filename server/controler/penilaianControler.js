@@ -8,7 +8,7 @@ export const getPenilaian=(req,res)=>{
 }
 
 export const getPenilaianProduk=(req,res)=>{
-   db.query(`SELECT * FROM penilaian WHERE produk_id = ${req.params.id}`,(err,result)=>{
+   db.query(`SELECT p.id,p.user_id,p.produk_id,p.komen,p.tgl,u.nama,u.email,u.url FROM penilaian as p JOIN user as u ON(u.id = p.user_id) WHERE p.produk_id = ${req.params.id}`,(err,result)=>{
     if(err) return res.status(500).json({msg:err.message})
     if(!result[0])
     return res.status(404).json({msg:"tidak ada penilaian"})

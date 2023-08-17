@@ -7,7 +7,7 @@ export default function PopUpLayout({children,event,fixed=true,open}){
     animate={open ? {y:0} : {y:'100vh'}}
     exit={{y:'100vh'}}
     transition={{ duration: 0.3, damping: 0, stiffness: 0 }}
-    className={`w-screen ${fixed ? "fixed bottom-0" : "static"} bg-whitePrimary rounded-lg z-50 border-t border-t-slate-700 box-border py-3`}
+    className={`w-screen ${fixed ? "fixed bottom-0" : "static"} bg-whitePrimary rounded-lg z-40 border-t border-t-slate-700 box-border py-3`}
     >
    
     {children}

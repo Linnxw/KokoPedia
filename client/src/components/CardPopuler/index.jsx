@@ -1,4 +1,4 @@
-import gopay from "/gopay.png"
+import gopay from "/promoGopay.png"
 export default function index(){
   return (
     <div className="h-16 w-screen flex items-center">

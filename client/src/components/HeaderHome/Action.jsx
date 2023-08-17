@@ -28,7 +28,7 @@ useEffect(()=>{
   <div className={`w-screen flex items-center justify-start font-noto tracking-wide text-sm p-2 z-40 top-0 ${active ? "bg-whitePrimary text-blackTxt fixed" : "text-whitePrimary sticky"}`} ref={ref}>
   
     <div className="flex items-center text-grayTxt w-3/5 relative flex items-center justify-start" onClick={handleChange}>
-      <input type="teks" className="outline-none rounded-lg p-2 w-full bg-whitePrimary ring-1 ring-grayTxt box-border peer"/>
+      <input type="teks" className="outline-none rounded-lg p-2 w-full bg-whitePrimary ring-1 ring-grayTxt box-border peer" readOnly/>
       <div className="absolute left-1 flex items-center peer-focus:hidden">
         <span className="text-xl grid place-items-center"><CiSearch/></span>
         <p className="select-none">Cari di KokoPedia</p>

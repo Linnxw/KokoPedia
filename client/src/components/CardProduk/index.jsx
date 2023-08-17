@@ -3,6 +3,7 @@ import pro from "/pro.png"
 import {motion} from "framer-motion"
 export default function index(props){
 const {img,
+id,
 level,
 title,
 harga,
@@ -52,7 +53,6 @@ const alamat=(almt)=>{
       animate={animate}
       transition={{
         duration: 0.3,
-        delay: 0.1,
         ease: [0, 0.71, 0.2,1]
       }}>
     <div className={`w-full ${height} relative`}>

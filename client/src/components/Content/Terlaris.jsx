@@ -57,7 +57,7 @@ export default function Terlaris(){
       icon={<PiWarningCircleLight/>} 
       title="Tidak ada produk dengan kategori terkait"/>
       ):(
-     produk.map((m,i)=>{
+     produk?.map((m,i)=>{
       return (
       <CardProduk
       key={i}

@@ -1,5 +1,10 @@
 export default function CardInfo(props){
-const {img,title,variant="text-grayTxt",value,detail} = props
+const {
+  img,
+  title,
+  variant="text-grayTxt",
+  value,
+  detail} = props
   return (
   <div className="w-[50%] h-full p-2 text-[.7rem]">
     <div className="flex items-center justify-start">

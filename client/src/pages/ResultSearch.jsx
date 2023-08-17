@@ -11,7 +11,7 @@ import CategoryList from "../components/CategoryList"
 import InfoAlamat from "../components/InfoAlamat"
 export default function ResultSearch(){
   const {search}=useParams()
-  const url=`http://localhost:5000/produk/search?search=${search}`
+  const url=`/produk/search?search=${search}`
   let [data,msg]=useProduk(url)
   const [active,setActive]=useState(false)
   const [isOpen,setIsOpen]=useState(false)
@@ -20,18 +20,19 @@ export default function ResultSearch(){
   const navigate=useNavigate()
   const [kategory,setKategory]=useState("Cashback")
   const [input,setInput]=useState("")
- useEffect(()=>{
+  
+  useEffect(()=>{
    setInput(search.replace("-"," "))
-   console.log(search.replace("-"," "))
- },[])
-useEffect(()=>{
-  const handleScroll=()=>{
-    if(window.scrollY > 10){
-      setActive(true)
-    }else{
-      setActive(false)
+  },[])
+ 
+  useEffect(()=>{
+    const handleScroll=()=>{
+      if(window.scrollY > 10){
+        setActive(true)
+      }else{
+        setActive(false)
+      }
     }
-  }
   window.addEventListener("scroll",handleScroll)
   return ()=>{
     window.removeEventListener("scroll",handleScroll)
@@ -40,7 +41,6 @@ useEffect(()=>{
   
   useEffect(()=>{
     setProduk(data)
-    console.log(data)
   },[data])
   
   const handleChange=()=>{
@@ -48,8 +48,8 @@ useEffect(()=>{
   }
   
   const listCategory=["Filter","Oficial store","Cashback","Free ongkir"]
-  const handleFilter=(m)=>{
   
+  const handleFilter=(m)=>{
     switch (m) {
       case 'Oficial store':
         const resultFilter=data.filter(m=>m.role_penjual === "admin")
@@ -69,7 +69,6 @@ useEffect(()=>{
   }
  
   const handleFilterDetail=(type)=>{
-  console.log("masuk filter")
     switch (type) {
       case 'Terlaris':
         const terlaris=data.sort((a,b)=>b.terjual - a.terjual)
@@ -91,8 +90,6 @@ useEffect(()=>{
         console.log(lokPilihan)
         setProduk(lokPilihan)
         setIsOpen(false)
-      default:
-        // code
     }
   }
   
@@ -130,6 +127,8 @@ useEffect(()=>{
      produk ? produk.map(m=>{
        return (
         <CardProduk 
+        id={m.id}
+        event={(id)=>navigate("/produk/"+id)}
         cashback={true} 
         title={m.nama_produk}
         img={m.url_foto_produk} 

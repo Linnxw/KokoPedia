@@ -10,7 +10,6 @@ const getAccessToken = async () => {
     store.dispatch(setToken(response.data.accesToken)); 
     return response.data.accesToken;
   } catch (err) {
-    console.log("eror token get",err);
   }
 };
 

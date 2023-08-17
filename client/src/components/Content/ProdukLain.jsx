@@ -7,16 +7,19 @@ import CardProduk from "../CardProduk"
 import {useEffect} from "react"
 import img from "/gopay.png"
 export default function ProdukLain(){
-  const dispatch=useDispatch()
   const {produk,isError,msg}=useSelector(state=>state.produk)
+  
+  const dispatch=useDispatch()
   const navigate=useNavigate()
+  
   useEffect(()=>{
     dispatch(getProduk())
-    console.log(produk)
   },[dispatch])
+  
   const handleNavigate=(id)=>{
     navigate(`/produk/${id}`)
   }
+  
   return (
     <div className="w-screen border-t-2 border-slate-200 font-noto mb-14">
      <div className="py-2 px-2 text-blackTxt font-bold">

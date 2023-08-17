@@ -12,10 +12,7 @@ export default function Search(){
   const navigate=useNavigate()
   const inputRef=useRef("")
   const [input,setInput]=useState("")
-  const [data,msg]=useProduk(`http://localhost:5000/produk/search?search=${input}`)
-  useEffect(()=>{
-    inputRef.current.focus()
-  },[])
+  const [data,msg]=useProduk(`/produk/search?search=${input}`)
   
   const handleNavigate=()=>{
     navigate("/home")
@@ -37,10 +34,10 @@ export default function Search(){
   }
   return (
   <motion.div
-  className="w-screen"
+  className="w-screen static z-50"
   initial={{y:'100vh'}}
   animate={{y:0}}
-  transition={{duration:0.3}}
+  transition={{duration:0.5}}
   >
    <div className="flex items-center justify-start p-2 gap-3">
      <div className="flex items-center justify-center text-slate-500" onClick={handleNavigate}>
