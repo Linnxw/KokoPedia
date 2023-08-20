@@ -29,7 +29,7 @@ export default function ProdukLain(){
      {
        produk?.map((m,i)=>{
          return (
-          <CardProduk cashback={true} title={m.nama_produk} img={m.url_foto_produk} kota={m.alamat} terjual={m.terjual} harga={m.harga} width="w-40" height="h-36" id={m.id} event={handleNavigate} gap="gap-1" level={pro}/>
+          <CardProduk key={m.id} cashback={true} title={m.nama_produk} img={m.url_foto_produk} kota={m.alamat} terjual={m.terjual} harga={m.harga} width="w-40" height="h-36" id={m.id} event={handleNavigate} gap="gap-1" level={pro}/>
            )
        })
      }

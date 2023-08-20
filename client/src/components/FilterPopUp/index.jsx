@@ -33,7 +33,7 @@ export default function index({eventFilter,event,inputTerendah,inputTertinggi,op
      {
        data.map((m,i)=>{
          return (
-      <FilterMenu title={m.title} isShowAll={m.isShowAll}>
+      <FilterMenu key={i} title={m.title} isShowAll={m.isShowAll}>
         {
           m.isInput ? (
             <>
@@ -41,8 +41,8 @@ export default function index({eventFilter,event,inputTerendah,inputTertinggi,op
             <Input placeholder={m.filterBy[1]} event={inputTertinggi}/>
             </>
             ) : (
-          m.filterBy.map(n=>(
-            <Button title={n} filterBy={by} event={eventFilter}/>
+          m.filterBy.map((n,i)=>(
+            <Button key={i} title={n} filterBy={by} event={eventFilter}/>
             ))
             )
         }

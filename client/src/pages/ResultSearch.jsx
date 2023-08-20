@@ -104,14 +104,14 @@ export default function ResultSearch(){
   <div className={`w-screen flex items-center justify-start font-noto tracking-wide text-blackTxt text-sm p-2 gap-2 z-40 top-0 bg-whitePrimary ${active ? "fixed" : "sticky"}`} ref={ref}>
     <span className="text-3xl flex items-center justify-center text-slate-400" onClick={handleChange}><AiOutlineArrowLeft/></span>
     <div className="flex items-center text-grayTxt w-3/5 relative flex items-center justify-start" onClick={handleChange}>
-      <input type="teks" className="absolute left-1 flex items-center text-slate-400 peer-focus " value={input}/>
+      <input type="teks" className="absolute left-1 flex items-center text-slate-400 peer-focus " defaultValue={input}/>
       <div className={`absolute left-1 flex items-center ${input.length > 0 && "hidden"} peer-focus:hidden`}>
         <span className="text-xl grid place-items-center"><CiSearch/></span>
         <p className="select-none">Cari di KokoPedia</p>
       </div>
     </div>
     
-    <div className="text-2xl flex items-center justify-evenly w-2/5" onClick={()=>console.log(input)}>
+    <div className="text-2xl flex items-center justify-evenly w-2/5">
     <span className="grid place-items-center"><CiShoppingCart/></span>
     <div className="flex items-center w-4 h-6 flex-col justify-evenly">
       <span className="bg-blackTxt inline-block w-full h-[2px] rounded"></span>
@@ -127,6 +127,7 @@ export default function ResultSearch(){
      produk ? produk.map(m=>{
        return (
         <CardProduk 
+        key={m.id}
         id={m.id}
         event={(id)=>navigate("/produk/"+id)}
         cashback={true} 

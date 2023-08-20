@@ -1,4 +1,4 @@
-import InfoAlamat from "../InfoAlamat"
+
 export default function index({data,kategory,event}){
   return (
   <div className="w-screen overflow-scroll scrollbar py-2">

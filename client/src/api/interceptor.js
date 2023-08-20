@@ -19,13 +19,14 @@ const checkAccessToken = async () => {
   if (token.length === 0) {
    return await getAccessToken();
   }
-  const decode=jwt_decode(token).exp
+  const decode=jwt_decode(token).exp;
 
   if(decode*1000 < new Date().getTime()){
-   return await getAccessToken()
+   return getAccessToken();
   }else{
    return token;
   }
+  
 };
 
 export const axiosJwt = axios.create({
@@ -34,7 +35,7 @@ export const axiosJwt = axios.create({
 });
 
 axiosJwt.interceptors.request.use(async (config) => {
-  const token = await checkAccessToken();
+  const token = checkAccessToken();
   config.headers["Authorization"] = `Bearer ${token}`;
-  return config
+  return config;
 });

@@ -33,7 +33,7 @@ export default function ProdukDetail(){
   const navigate=useNavigate()
   const [input,setInput]=useState("")
 
-useEffect(()=>{
+  useEffect(()=>{
   const handleScroll=()=>{
     if(window.scrollY > 5){
       setActive(true)
@@ -54,7 +54,6 @@ useEffect(()=>{
       harga:convertRupiah(data[0].harga)
     }
     setProduk(newData)
-    console.log(data)
     }
   },[data])
   
@@ -65,7 +64,6 @@ useEffect(()=>{
   const getComent=async()=>{
     try{
       const {data}=await instance.get("/penilaian/"+id)
-      console.log(data)
       setComent(data)
     }catch(err){
       console.log(err)
@@ -166,7 +164,7 @@ useEffect(()=>{
     <CardBeli/>
     {
       coment?.map((m,i)=>{
-      return <UlasanPembeli data={m}/>
+      return <UlasanPembeli key={m.id} data={m}/>
       })
     }
   </div>

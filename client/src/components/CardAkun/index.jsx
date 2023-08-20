@@ -18,13 +18,13 @@ export default function index(){
     <div className="w-screen px-2 h-20 flex items-center">
       <div className="h-full flex items-center justify-center">
       <div className="rounded-full overflow-hidden w-16 h-16">
-       <img src={me?.url} className="h-full object-cover w-full"/>
+       <img src={me? me.url : avatar} className="h-full object-cover w-full"/>
       </div>
       </div>
       <div className="w-full flex flex-col px-2 items-start font-noto text-[.7rem] text-blackTxt">
       <div className="w-full flex items-center justify-start gap-1 font-inter font-semibold text-lg">
         <img src={reward} className="w-5 object-contain"/>
-        <h1>{me?.nama}</h1>
+        <h1>{me ? me.nama : "User18728"}</h1>
       </div>
       <div className="w-full flex items-center justify-start gap-1">
         <img src={gopay} className="w-5 object-contain"/>
