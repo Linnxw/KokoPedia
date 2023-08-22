@@ -5,7 +5,23 @@ import CardNotHaveTransaction
 from 
 "../components/CardNotHaveTransaction"
 import tidakadariwayat from "/tidakadariwayat.png"
+import {getHistory} from "../redux/slice/historySlice"
+import {useEffect,useState} from "react"
+import CardHistory from "../components/CardHistory"
+import {useDispatch,useSelector} from "react-redux"
 export default function History(){
+  const [history,setHistory]=useState(true)
+  const dispatch=useDispatch()
+  const {data,msg,pending}=useSelector(state=>state.history)
+   
+   useEffect(()=>{
+     dispatch(getHistory())
+   },[])
+  
+   useEffect(()=>{
+     console.log(data)
+   },[data])
+  
   return (
   <motion.div
   initial={{opacity:0}}
@@ -13,11 +29,21 @@ export default function History(){
   transition={{duration:0.5}}
   >
    <HistoryLayout>
-     <CardNotHaveTransaction
-     img={tidakadariwayat}
-     desc="Yuk, mulai belanja dan penuhi berbagai kebutuhanmu di Kokopedia!"
-     title="Kamu belum pernah bertransaksi"
+   {
+     history ? (
+         data?.map(m=>{
+           return <CardHistory key={m.id} data={m}/>
+         })
+       ) 
+       :
+       (
+      <CardNotHaveTransaction
+      img={tidakadariwayat}
+      desc="Yuk, mulai belanja dan penuhi berbagai kebutuhanmu di Kokopedia!"
+      title="Kamu belum pernah bertransaksi"
      />
+     )
+   }
    </HistoryLayout>
    <NavbarLayout/>
   </motion.div>

@@ -44,8 +44,8 @@ export default function Search(){
        <span className="text-3xl flex items-center justify-center"><AiOutlineArrowLeft/></span>
      </div>
     <div className="flex items-center text-blackTxt w-4/5 relative flex items-center justify-start text-[.9rem]">
-      <input type="teks" className="outline-none rounded-lg p-2 w-full bg-whitePrimary ring-1 ring-slate-200 box-border peer font-noto" ref={inputRef} onKeyPress={handleSearch} onChange={handleChange} value={input}/>
-      <div className={`absolute left-1 flex items-center text-slate-400 peer-focus:hidden ${input.length > 0 && "hidden"}`}>
+      <input type="teks" className="outline-none rounded-lg static z-10 bg-transparent p-2 w-full ring-1 ring-slate-200 box-border peer font-noto" ref={inputRef} onKeyPress={handleSearch} onChange={handleChange} value={input}/>
+      <div className={`absolute left-1 flex items-center z-0 text-slate-400 peer-focus:hidden ${input.length > 0 && "hidden"}`}>
         <span className="text-xl grid place-items-center"><CiSearch/></span>
         <p>Cari di KokoPedia</p>
       </div>
