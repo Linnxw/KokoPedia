@@ -1,7 +1,7 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
 import {axiosJwt} from "../../api/interceptor"
 const initialState={
-  me:{},
+  me:null,
   isLoading:false,
   isError:false,
   msg:null
@@ -34,7 +34,7 @@ const meSlice=createSlice({
     builder.addCase(getMe.rejected,(state,action)=>{
       state.isLoading=false
       state.isError=true
-      console.log({action})
+      state.me = null
     })
   }
 })

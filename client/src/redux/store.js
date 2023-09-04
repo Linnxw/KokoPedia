@@ -8,8 +8,8 @@ import meSlice from "./slice/meSlice"
 import historySlice from "./slice/historySlice"
 const store=configureStore({
   reducer:{
-    auth:auth,
     me:meSlice,
+    auth:auth,
     logout:authLogout,
     token:tokenSlice,
     produk: produkSlice,

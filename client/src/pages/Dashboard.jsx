@@ -6,11 +6,11 @@ import {MdAttachMoney} from "react-icons/md"
 import ChartShelling from "../charts/ChartShelling"
 import TabelHistory from "../components/TabelHistory"
 import {useDispatch,useSelector} from "react-redux"
-import {logout} from "../redux/slice/logoutSlice"
 import {axiosJwt} from "../api/interceptor"
 import {useNavigate} from "react-router-dom"
 import {motion} from "framer-motion"
 import {useState,useEffect} from "react"
+import {convertRupiah} from "../helper/convertRupiah"
 export default function Dashboard(){
 const [produk,setProduk]=useState([])
 const [terjual,setTerjual]=useState(0)
@@ -65,22 +65,8 @@ const data=[
     const total=myProduk.reduce((value,next)=>{
     return value+next.terjual*next.harga
     },0)
-    convertRupiah(total)
-  }
-  
-  const convertRupiah=(data)=>{
-    let rupiah=""
-    const strRupiah=data.toString()
-    
-    let counter=0
-    for(let i= strRupiah.length -1; i >= 0 ;i--){
-      rupiah=strRupiah[i] + rupiah
-      counter++
-      if(counter % 3 === 0 && i !== 0){
-        rupiah="." + rupiah
-      }
-    }
-    setPendapatan(rupiah)
+    const convert = convertRupiah(total)
+    setPendapatan(convert)
   }
   
   const getHistory=async()=>{
@@ -112,7 +98,7 @@ const data=[
   transition={{duration:0.5}}
   >
     <header className="p-3 text-blackTxt font-noto text-2xl md:text-5xl md:p-6 font-normal">
-     <h1 onClick={()=>dispatch(logout("ok"))}>Dashboard</h1>
+     <h1>Dashboard</h1>
     </header>
     <div className="w-screen flex flex-col md:flex-row gap-3 md:justify-center" onClick={getHistory}>
     {

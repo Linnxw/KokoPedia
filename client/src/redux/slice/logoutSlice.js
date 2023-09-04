@@ -7,10 +7,9 @@ const initialState={
   isError:false
 }
 
-export const logout=createAsyncThunk("/logout",async(data,thunkAPI)=>{
+export const logout=createAsyncThunk("/logout",async(thunkAPI)=>{
   try{
     const token=await axios.get("http://localhost:5000/token",{withCredentials:true})
-    console.log(token)
     const response=await axios.delete("http://localhost:5000/logout",{withCredentials:true},{
      headers:{
       'Authorization':`Bearer ${token.data.accesToken}`

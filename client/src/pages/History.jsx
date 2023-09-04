@@ -18,10 +18,6 @@ export default function History(){
      dispatch(getHistory())
    },[])
   
-   useEffect(()=>{
-     console.log(data)
-   },[data])
-  
   return (
   <motion.div
   initial={{opacity:0}}

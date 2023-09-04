@@ -4,7 +4,7 @@ export default function Body({detail}){
   
     <div className="flex justify-center w-full">
       <tabel className="text-[.6rem] font-noto text-blackTxt border-collapse text-center table-auto">
-       <tr className="border-t border-b border-blackTxt font-semibold">
+       <tr className="border-t border-b border-blackTxt">
          <td className="px-6">INFO PRODUK</td>
          <td className="px-2">JUMLAH</td>
          <td className="px-2">HARGA SATUAN</td>
@@ -12,7 +12,7 @@ export default function Body({detail}){
        </tr>
        <tr className="text-[.6rem]">
          <td className="px-6 py-1">
-          <p className="text-left text-greenPrimary font-bold">{detail.nma_produk}</p>
+          <p className="text-left text-greenPrimary">{detail.nma_produk}</p>
           <p className="text-[.5rem] text-left">berat : {detail?.berat / 10 / 10} {" " + "kg"}</p>
          </td>
          <td className="px-2 py-1">{detail.jumlah}</td>
@@ -28,7 +28,7 @@ export default function Body({detail}){
          <tr>
           <td>Total harga( {detail.jumlah} barang)</td>
           <td> : </td>
-          <td className="font-semibold">{detail.ttl_jual}</td>
+          <td>{detail.ttl_jual}</td>
          </tr>
          <tr>
           <td>Total ongkit(per kg)</td>
@@ -43,12 +43,12 @@ export default function Body({detail}){
          <tr>
           <td>Total Belanja</td>
           <td> : </td>
-          <td className="font-semibold">{detail.ttl_jual}</td>
+          <td>{detail.ttl_jual}</td>
          </tr>
          <tr>
           <td>Total tagihan</td>
           <td> : </td>
-          <td className="font-semibold">{detail.ttl_jual}</td>
+          <td>{detail.ttl_jual}</td>
          </tr>
        </tabel>
       </div>
