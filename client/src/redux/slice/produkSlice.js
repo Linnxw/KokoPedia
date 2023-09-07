@@ -11,6 +11,7 @@ const initialState={
 export const getProduk=createAsyncThunk("/getProduk",async(thunkAPI)=>{
   try{
     const response=await instance.get("/produk")
+    console.log(response.data)
     return response.data
   }catch(err){
    if(err.response){
@@ -18,6 +19,7 @@ export const getProduk=createAsyncThunk("/getProduk",async(thunkAPI)=>{
    }
   }
 })
+
 
 const produkSlice = createSlice({
   name:"produk slice",

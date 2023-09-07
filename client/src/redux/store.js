@@ -6,6 +6,7 @@ import produkKategory from "./slice/produkKategorySlice"
 import produkSlice from "./slice/produkSlice"
 import meSlice from "./slice/meSlice"
 import historySlice from "./slice/historySlice"
+import addKeranjangSlice from "./slice/addKeranjangSlice"
 const store=configureStore({
   reducer:{
     me:meSlice,
@@ -14,7 +15,8 @@ const store=configureStore({
     token:tokenSlice,
     produk: produkSlice,
     produkKategory:produkKategory,
-    history:historySlice
+    history:historySlice,
+    addKeranjang:addKeranjangSlice
   }
 })
 export default store

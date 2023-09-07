@@ -1,4 +1,7 @@
 import {useState,useEffect,useRef} from "react"
+import {useDispatch,useSelector} from 'react-redux'
+import {addKeranjang} from '../redux/slice/addKeranjangSlice'
+import OptionLayout from "../layout/OptionLayout" 
 import {useNavigate,useParams} from "react-router-dom"
 import {CiShoppingCart} from "react-icons/ci" 
 import {AiOutlineArrowLeft} from "react-icons/ai"
@@ -25,6 +28,8 @@ import {instance} from "../api/instance"
 export default function ProdukDetail(){
   const [active,setActive]=useState(false)
   const [isOpen,setIsOpen]=useState(false)
+  
+  const [isAddKeranjang,setIsAddKeranjang] = useState(false)
   const [produk,setProduk]=useState({})
   const {id}=useParams()
   const [data,msg]=useProduk(`/produk/${id}`)
@@ -53,6 +58,7 @@ export default function ProdukDetail(){
       ...data[0],
       harga:convertRupiah(data[0].harga)
     }
+    console.log(newData)
     setProduk(newData)
     }
   },[data])
@@ -79,6 +85,11 @@ export default function ProdukDetail(){
   }
   const handleInputTertinggi=(e)=>{
     console.log(e.target.value)
+  }
+  
+  const handleAddKeranjang=()=>{
+    console.log(isAddKeranjang)
+    setIsAddKeranjang(state=>!state)
   }
   return (
   <div className="w-screen overflow-x-hidden pb-14">
@@ -161,12 +172,13 @@ export default function ProdukDetail(){
        </div>
     </PopUpLayout>
     <CardPenjual data={produk}/>
-    <CardBeli/>
+    <CardBeli event={handleAddKeranjang}/>
     {
       coment?.map((m,i)=>{
       return <UlasanPembeli key={m.id} data={m}/>
       })
     }
+    <OptionLayout open={isAddKeranjang} produk={produk}/>
   </div>
     )
 }
