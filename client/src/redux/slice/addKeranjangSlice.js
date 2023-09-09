@@ -2,13 +2,13 @@ import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
 import {axiosJwt} from "../../api/interceptor"
 
 const initialState = {
-  data:[],
+  data:"",
   pending:false,
   error:false,
   msg:null
 }
 
-export const addKeranjang = async (data,thunkApi)=>{
+export const add = async (data,thunkApi)=>{
   try{
     const response = await axiosJwt.post(`/keranjang?id=${data.id}&jumlah=${data.jumlah}`)
     console.log(response)
@@ -32,7 +32,7 @@ const addKeranjangSlice = createAsyncThunk({
       state.error = false
     })
     builder.addCase(addKeranjang.reject,(state,action)=>{
-      state.data = []
+      state.data = ""
       state.pending = false
       state.msg = action.payload
       state.error = true

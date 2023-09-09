@@ -1,6 +1,6 @@
 import {useState,useEffect,useRef} from "react"
 import {useDispatch,useSelector} from 'react-redux'
-import {addKeranjang} from '../redux/slice/addKeranjangSlice'
+import {add} from '../redux/slice/addKeranjangSlice'
 import OptionLayout from "../layout/OptionLayout" 
 import {useNavigate,useParams} from "react-router-dom"
 import {CiShoppingCart} from "react-icons/ci" 
@@ -178,7 +178,7 @@ export default function ProdukDetail(){
       return <UlasanPembeli key={m.id} data={m}/>
       })
     }
-    <OptionLayout open={isAddKeranjang} produk={produk}/>
+    <OptionLayout event={()=>setIsAddKeranjang(prev=>!prev)} open={isAddKeranjang} produk={produk}/>
   </div>
     )
 }
