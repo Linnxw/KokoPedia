@@ -8,10 +8,9 @@ const initialState = {
   msg:null
 }
 
-export const add = async (data,thunkApi)=>{
+export const add = createAsyncThunk("addKeranjang",async (data,thunkApi)=>{
   try{
     const response = await axiosJwt.post(`/keranjang?id=${data.id}&jumlah=${data.jumlah}`)
-    console.log(response)
     return response.data.msg
   }catch(err){
     if(err.response){
@@ -19,25 +18,25 @@ export const add = async (data,thunkApi)=>{
     }
     console.log(err)
   }
-}
+})
 
-const addKeranjangSlice = createAsyncThunk({
+const addKeranjangSlice = createSlice({
   name:'add keranjang slice',
   initialState,
   reducers:{},
   extraReducers:(builder)=>{
-    builder.addCase(addKeranjang.pending,(state)=>{
+    builder.addCase(add.pending,(state)=>{
       state.pending = true
       state.msg = null
       state.error = false
     })
-    builder.addCase(addKeranjang.reject,(state,action)=>{
+    builder.addCase(add.rejected,(state,action)=>{
       state.data = ""
       state.pending = false
       state.msg = action.payload
       state.error = true
     })
-    builder.addCase(addKeranjang.fulfilled,(state,action)=>{
+    builder.addCase(add.fulfilled,(state,action)=>{
       state.data = action.payload
       state.pending = false
       state.msg = null

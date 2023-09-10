@@ -8,14 +8,14 @@ import {HiOutlinePlusSm} from "react-icons/hi"
 import {HiOutlineMinusSm} from "react-icons/hi"
 import {RxCross2} from "react-icons/rx"
 export default function OptionLayout({open,produk,event}){
-  
+    
   const dispatch = useDispatch()
-  const Keranjang = useSelector(state=>state.addKeranjang)
+  const {data,msg,error} = useSelector(state=>state.addKeranjang)
   const [qty,setQty] = useState(0)
   
   useEffect(()=>{
-     console.log(Keranjang  )
-  },[])
+    console.log(data)
+  },[dispatch,data,error])
  
  const handleAddKeranjang = async () =>{
    const data = {
@@ -23,6 +23,7 @@ export default function OptionLayout({open,produk,event}){
      jumlah:qty
    }
    dispatch(add(data))
+   event()
  }
   return (
     <div className={`w-screen border-t border-slate-700 z-30 p-2 bg-white fixed ${open ? "bottom-0" : "-bottom-96"} rounded-t transition-all ease-in-out duration-300`}>

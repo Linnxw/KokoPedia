@@ -5,7 +5,6 @@ export const getMyKeranjang=(req,res)=>{
   
   db.query(sql,(err,result)=>{
     if(err) return res.status(500).json({msg:err.message})
-    console.log(result)
     res.status(200).json(result)
   })
 }
@@ -21,23 +20,17 @@ export const getMyKeranjangById=(req,res)=>{
 
 export const addKeranjang=(req,res)=>{
   const {id,jumlah}=req.query
-  console.log("masuk add keranjang ",{id,jumlah})
   db.query(`SELECT * FROM keranjang WHERE produk_id = ${id}  AND user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
     if(err) return res.status(500).json({msg:err})
-    console.log({result0:result})
     if(!result[0]){
      const sql=`INSERT INTO keranjang (user_id,produk_id,jumlah) VALUES ((SELECT id FROM user WHERE email = '${req.email}'),${parseInt(id)},${parseInt(jumlah)})`
      db.query(sql,(err,result)=>{
-       console.log("true",result)
       if(err) return res.status(500).json({msg:err.message})
-      
       res.status(200).json({msg:"berhasil,telah ditambahkan ke keranjang"})
      })
     }else{
       db.query(`UPDATE keranjang SET jumlah = jumlah + ${parseInt(jumlah)} WHERE id = ${result[0].id} AND user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
-        console.log("falsee",{result,err})
        if(err) return res.status(500).json({msg:err.message})
-       
        res.status(200).json({msg:"berhasil,telah menambahkan keranjang"})
       })
     }

@@ -1,5 +1,6 @@
 import {useParams,useNavigate} from "react-router-dom"
 import CardProduk from "../components/CardProduk"
+import {axiosJwt} from "../api/interceptor"
 import {useProduk} from "../hooks/useProduk"
 import {CiShoppingCart} from "react-icons/ci" 
 import FilterPopUp from "../components/FilterPopUp"
@@ -14,6 +15,7 @@ export default function ResultSearch(){
   const url=`/produk/search?search=${search}`
   let [data,msg]=useProduk(url)
   const [active,setActive]=useState(false)
+  const [keranjang,setKeranjang]=useState(0)
   const [isOpen,setIsOpen]=useState(false)
   const [produk,setProduk]=useState([])
   const ref=useRef()
@@ -99,6 +101,19 @@ export default function ResultSearch(){
   const handleInputTertinggi=(e)=>{
     console.log(e.target.value)
   }
+  
+   useEffect(()=>{
+    getKeranjang()
+  },[])
+  
+  const getKeranjang=async()=>{
+    try{
+      const response=await axiosJwt.get("/keranjang")
+      setKeranjang(response.data.length)
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
   <div className="w-screen">
   <div className={`w-screen flex items-center justify-start font-noto tracking-wide text-blackTxt text-sm p-2 gap-2 z-40 top-0 bg-whitePrimary ${active ? "fixed" : "sticky"}`} ref={ref}>
@@ -112,7 +127,10 @@ export default function ResultSearch(){
     </div>
     
     <div className="text-2xl flex items-center justify-evenly w-2/5">
-    <span className="grid place-items-center"><CiShoppingCart/></span>
+    <span className="grid relative place-items-center" onClick={()=>navigate("/keranjang")} >
+     <span className="w-4 text-white font-inter h-4 text-[.5rem] text-semibold flex items-center justify-center rounded-full bg-red-500 absolute -right-2 -top-2">{keranjang}</span>
+    <CiShoppingCart/>
+    </span>
     <div className="flex items-center w-4 h-6 flex-col justify-evenly">
       <span className="bg-blackTxt inline-block w-full h-[2px] rounded"></span>
       <span className="bg-blackTxt inline-block w-full h-[2px] rounded"></span>

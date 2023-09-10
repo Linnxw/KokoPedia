@@ -12,6 +12,7 @@ import {AiOutlineHeart} from "react-icons/ai"
 import {PiHandbagThin} from "react-icons/pi"
 import {GoChecklist} from "react-icons/go"
 import {convertRupiah} from "../helper/convertRupiah"
+import {axiosJwt} from "../api/interceptor"
 import Button from "../components/Button"
 import MenuBack from "../components/MenuBack"
 import PopUpLayout from "../layout/PopUpLayout"
@@ -33,6 +34,7 @@ export default function ProdukDetail(){
   const [produk,setProduk]=useState({})
   const {id}=useParams()
   const [data,msg]=useProduk(`/produk/${id}`)
+  const [keranjang,setKeranjang]=useState(0)
   const [coment,setComent]=useState([])
   const ref=useRef()
   const navigate=useNavigate()
@@ -46,6 +48,7 @@ export default function ProdukDetail(){
       setActive(false)
     }
   }
+  
   window.addEventListener("scroll",handleScroll)
   return ()=>{
     window.removeEventListener("scroll",handleScroll)
@@ -91,6 +94,19 @@ export default function ProdukDetail(){
     console.log(isAddKeranjang)
     setIsAddKeranjang(state=>!state)
   }
+  
+  useEffect(()=>{
+    getKeranjang()
+  },[])
+  
+  const getKeranjang=async()=>{
+    try{
+      const response=await axiosJwt.get("/keranjang")
+      setKeranjang(response.data.length)
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
   <div className="w-screen overflow-x-hidden pb-14">
   <div className={`w-screen translateZ(0) flex ${active ? "bg-whitePrimary" : "bg-transparent"} items-center justify-start font-noto tracking-wide text-blackTxt text-sm p-2 gap-2 z-40 top-0 fixed`} ref={ref}>
@@ -104,7 +120,10 @@ export default function ProdukDetail(){
     </div>
     
    <div className="text-2xl flex items-center justify-evenly w-2/5">
-    <span className="grid place-items-center" onClick={()=>navigate("/keranjang")} ><CiShoppingCart/></span>
+    <span className="grid relative place-items-center" onClick={()=>navigate("/keranjang")} >
+     <span className="w-4 text-white font-inter h-4 text-[.5rem] text-semibold flex items-center justify-center rounded-full bg-red-500 absolute -right-2 -top-2">{keranjang}</span>
+    <CiShoppingCart/>
+    </span>
     <div className="flex items-center w-4 h-6 flex-col justify-evenly" onClick={()=>setIsOpen(prev=>!prev)}>
       <span className="bg-blackTxt inline-block w-full h-[2px] rounded"></span>
       <span className="bg-blackTxt inline-block w-full h-[2px] rounded"></span>

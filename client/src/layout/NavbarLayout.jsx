@@ -45,7 +45,6 @@ export default function NavbarLayout(){
   }
   
   useEffect(()=>{
-    console.log("navbar rendered")
    async function handleMenu(){
     const user = await getMe()
     if(!user){
