@@ -1,8 +1,8 @@
 import CardToko from "./CardToko"
-export default function index({data, refresh}){
+export default function index({beli,data, refresh}){
   return (
     <div>
-      <CardToko data={data} refresh={refresh}/>
+      <CardToko data={data} beli={beli} refresh={refresh}/>
     </div>
     )
 }

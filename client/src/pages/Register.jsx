@@ -1,7 +1,7 @@
-import Input from "../components/Input"
+import Input from "@components/Input"
 import {useState,useEffect} from "react"
 import FormLayout from "../layout/FormLayout"
-import InputFile from "../components/InputFile"
+import InputFile from "@components/InputFile"
 export default function Register(){
 const [email,setEmail]=useState("")
 const [password,setPassword]=useState("")

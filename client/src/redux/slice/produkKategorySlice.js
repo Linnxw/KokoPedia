@@ -32,7 +32,7 @@ const produkKategory=createSlice({
     })
     
     builder.addCase(getProdukKategory.fulfilled,(state,action)=>{
-      state.loading=false
+      state.pending=false
       state.produk=action.payload
     })
     

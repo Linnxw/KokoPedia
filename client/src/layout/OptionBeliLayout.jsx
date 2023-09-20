@@ -8,15 +8,15 @@ import Button from "../components/CardBeli/Button"
 import {HiOutlinePlusSm} from "react-icons/hi"
 import {HiOutlineMinusSm} from "react-icons/hi"
 import {RxCross2} from "react-icons/rx"
-export default function OptionLayout({open,produk,event}){
+export default function OptionBeliLayout({open,produk,event}){
     const navigate = useNavigate()
   const dispatch = useDispatch()
   const {data,msg,error} = useSelector(state=>state.addKeranjang)
   const [qty,setQty] = useState(1)
   
   useEffect(()=>{
-    console.log(data)
-  },[dispatch,data,error])
+    console.log(produk)
+  },[produk])
  
  const handleAddKeranjang = async () =>{
    const data = {
@@ -33,7 +33,7 @@ export default function OptionLayout({open,produk,event}){
         <span className="text-2xl text-blackTxt flex items-center justify-center"><RxCross2/></span>
        </div>
        <div className={`flex w-screen justify-start px-10 items-center font-inter font-bold tracking-wide`}>
-       <p>Varian</p>
+       <p>Varian beli</p>
        </div>
       </div>
       <div>
@@ -66,8 +66,10 @@ export default function OptionLayout({open,produk,event}){
           </div>
         </div>
         <div className="w-full bg-whitePrimary flex h-16 gap-1 items-center justify-evenly">
-        <Button  event={()=>navigate("/checkout/" + produk.id + "?jumlah=" + qty)} green={false}>Beli Langsung({qty})</Button>
-        <Button green={true} event= {handleAddKeranjang}>Tambah Keranjang({qty})</Button>
+     
+        <Button green={false} event= {handleAddKeranjang}>Tambah Keranjang({qty})</Button>
+        <Button event={()=>navigate("/checkout/" + produk.id + "?jumlah=" + qty)} green={true}
+        >Beli Langsung({qty})</Button>
       </div>
       </div>
     </div>

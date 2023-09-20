@@ -10,6 +10,7 @@ const initialState={
 export const getMe=createAsyncThunk("/me",async(thunkAPI)=>{
   try{
     const response=await axiosJwt.get("/user/me")
+    console.log(response.data)
     return response.data
   }catch(err){
     console.log(err)

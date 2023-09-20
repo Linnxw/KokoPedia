@@ -14,8 +14,8 @@ terjual,
 width='w-36',
 height='h-28',
 gap="gap-2px",
-initial={ opacity: 0, x: '-2000px'},
-animate={ opacity: 1, x: 0 }
+initial={ opacity: 0},
+animate={ opacity: 1}
 }=props
 
 const alamat=(almt)=>{

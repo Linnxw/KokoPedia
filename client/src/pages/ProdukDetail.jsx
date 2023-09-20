@@ -7,34 +7,37 @@ import {CiShoppingCart} from "react-icons/ci"
 import {AiOutlineArrowLeft} from "react-icons/ai"
 import {RiCustomerService2Fill} from "react-icons/ri"
 import {PiUsersLight} from "react-icons/pi"
-import UlasanPembeli from "../components/UlasanPembeli"
+import UlasanPembeli from "@components/UlasanPembeli"
 import {AiOutlineHeart} from "react-icons/ai"
 import {PiHandbagThin} from "react-icons/pi"
 import {GoChecklist} from "react-icons/go"
 import {convertRupiah} from "../helper/convertRupiah"
 import {axiosJwt} from "../api/interceptor"
-import Button from "../components/Button"
-import MenuBack from "../components/MenuBack"
+import Button from "@components/Button"
+import MenuBack from "@components/MenuBack"
 import PopUpLayout from "../layout/PopUpLayout"
-import CardAkun from "../components/CardAkun"
+import CardAkun from "@components/CardAkun"
 import MenuLayout from "../layout/MenuLayout"
+import OptionBeliLayout from "../layout/OptionBeliLayout"
 import ongkir from "/ongkir.png"
 import img from "/laptop.webp"
 import {CiSearch} from "react-icons/ci"
-import CardPenjual from "../components/CardPenjual"
-import CardBeli from "../components/CardBeli"
+import CardPenjual from "@components/CardPenjual"
+import CardBeli from "@components/CardBeli"
 import {useProduk} from "../hooks/useProduk"
 import {motion} from "framer-motion"
 import {instance} from "../api/instance"
+import ProdukDetailSkeleton from "@components/Skeleton/ProdukDetailSkeleton"
 export default function ProdukDetail(){
   const [active,setActive]=useState(false)
   const [isOpen,setIsOpen]=useState(false)
   
   const [isAddKeranjang,setIsAddKeranjang] = useState(false)
-  const [produk,setProduk]=useState({})
+  const [produk,setProduk]=useState(null)
   const {id}=useParams()
   const [data,msg]=useProduk(`/produk/${id}`)
   const [keranjang,setKeranjang]=useState(0)
+  const [isBuy,setIsBuy] = useState(false)
   const [coment,setComent]=useState([])
   const ref=useRef()
   const navigate=useNavigate()
@@ -58,10 +61,9 @@ export default function ProdukDetail(){
   useEffect(()=>{
     if(data){
     const newData={
-      ...data[0],
-      harga:convertRupiah(data[0].harga)
+      ...data,
+      harga:convertRupiah(data[0]?.harga)
     }
-    console.log(newData)
     setProduk(newData)
     }
   },[data])
@@ -95,6 +97,9 @@ export default function ProdukDetail(){
     setIsAddKeranjang(state=>!state)
   }
   
+  const handleBeli = () =>{
+    setIsBuy(prev=>!prev)
+  }
   useEffect(()=>{
     getKeranjang()
   },[])
@@ -107,7 +112,7 @@ export default function ProdukDetail(){
       console.log(err)
     }
   }
-  return (
+  return produk ? (
   <div className="w-screen overflow-x-hidden pb-14">
   <div className={`w-screen translateZ(0) flex ${active ? "bg-whitePrimary" : "bg-transparent"} items-center justify-start font-noto tracking-wide text-blackTxt text-sm p-2 gap-2 z-40 top-0 fixed`} ref={ref}>
     <span className="text-3xl flex items-center justify-center text-slate-400" onClick={handleChange}><AiOutlineArrowLeft/></span>
@@ -134,12 +139,12 @@ export default function ProdukDetail(){
   
   <div className="w-full">
    <div className="full h-80 bg-white">
-     <img src={produk?.url_foto_produk} className="w-full h-full object-contain"/>
+     <img src={produk?.url_foto_produk} className="w-full h-full object-cover"/>
    </div>
    <div className="py-4 px-3 flex flex-col gap-y-1 font-inter bg-white">
     <div className="w-full flex justify-between">
      <div className="flex gap-2 items-center font-inter">
-      <h1 className="font-bold text-blackTxt text-xl">{produk.harga}</h1>
+      <h1 className="font-bold text-blackTxt text-xl">{produk?.harga}</h1>
       <img src={ongkir} className="h-6"/>
     </div>
     <span className="text-2xl text-slate-700"><AiOutlineHeart/></span>
@@ -191,13 +196,14 @@ export default function ProdukDetail(){
        </div>
     </PopUpLayout>
     <CardPenjual data={produk}/>
-    <CardBeli event={handleAddKeranjang}/>
+    <CardBeli beli={handleBeli} keranjang={handleAddKeranjang}/>
     {
       coment?.map((m,i)=>{
       return <UlasanPembeli key={m.id} data={m}/>
       })
     }
     <OptionLayout event={()=>setIsAddKeranjang(prev=>!prev)} open={isAddKeranjang} produk={produk}/>
+    <OptionBeliLayout event={()=>setIsBuy(prev=>!prev)} open={isBuy} produk={produk}/>
   </div>
-    )
+    ) : <ProdukDetailSkeleton/>
 }

@@ -3,6 +3,7 @@ import NotFound from "../NotFound"
 import gopay from "/gopay.png"
 import {useEffect,useState} from "react"
 import {useDispatch,useSelector} from "react-redux"
+import ProdukSkeleton from "../Skeleton/ProdukSkeleton"
 import pro from "/pro.png"
 import {useNavigate} from "react-router-dom"
 import {getProdukKategory,reset} from "../../redux/slice/produkKategorySlice"
@@ -11,7 +12,7 @@ export default function Terlaris(){
   const [kategory,setKategory]=useState("Laptop")
   const dispatch=useDispatch()
   const navigate=useNavigate()
-  const {produk,msg,isError}=useSelector(state=>state.produkKategory)
+  const {produk,msg,isError,pending}=useSelector(state=>state.produkKategory)
   useEffect(()=>{
     dispatch(getProdukKategory(kategory))
     return ()=>{
@@ -51,8 +52,7 @@ export default function Terlaris(){
    </div>
    <div className="flex h-56 w-screen overflow-x-scroll px-1 scrollbar">
    <div className="flex gap-1 min-w-min">
-   {
-    isError ? (
+   {pending ? <ProdukSkeleton cashback={true} cards={4}/> : isError ? (
       <NotFound 
       icon={<PiWarningCircleLight/>} 
       title="Tidak ada produk dengan kategori terkait"/>

@@ -8,6 +8,7 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Search from "./pages/Search"
 import ResultSearch from "./pages/ResultSearch"
+import Checkout from "./pages/Checkout/"
 import ProdukDetail from "./pages/ProdukDetail"
 import Keranjang from "./pages/Keranjang"
 import {AnimatePresence} from "framer-motion"
@@ -28,6 +29,7 @@ function App() {
      <Route path="/search" element={<Search/>}/>
      <Route path="/search/:search" element={<ResultSearch/>}/>
      <Route path="/keranjang" element={<Keranjang/>}/>
+     <Route path="/checkout/:id" element={<Checkout/>}/>
      <Route path="/produk/:id" element={<ProdukDetail/>}/>
     </Routes>
    </AnimatePresence>

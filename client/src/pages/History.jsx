@@ -3,11 +3,11 @@ import NavbarLayout from "../layout/NavbarLayout"
 import HistoryLayout from "../layout/HistoryLayout"
 import CardNotHaveTransaction 
 from 
-"../components/CardNotHaveTransaction"
+"@components/CardNotHaveTransaction"
 import tidakadariwayat from "/tidakadariwayat.png"
 import {getHistory} from "../redux/slice/historySlice"
 import {useEffect,useState} from "react"
-import CardHistory from "../components/CardHistory"
+import CardHistory from "@components/CardHistory"
 import {useDispatch,useSelector} from "react-redux"
 export default function History(){
   const [history,setHistory]=useState(true)
@@ -18,6 +18,9 @@ export default function History(){
      dispatch(getHistory())
    },[])
   
+   useEffect(()=>{
+   console.log(data)
+   },[data])
   return (
   <motion.div
   initial={{opacity:0}}

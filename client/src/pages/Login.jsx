@@ -1,4 +1,4 @@
-import Input from "../components/Input"
+import Input from "@components/Input"
 import {useState,useEffect} from "react"
 import FormLayout from "../layout/FormLayout"
 import {login} from "../redux/slice/authSlice"

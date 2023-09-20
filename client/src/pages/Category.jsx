@@ -2,7 +2,7 @@ import NavbarLayout from "../layout/NavbarLayout"
 import {useState} from "react"
 import {motion} from "framer-motion"
 import CategoryLayout from "../layout/CategoryLayout"
-import CardCategory from "../components/CardCategory"
+import CardCategory from "@components/CardCategory"
 import pilihanCategory from "../helper/pilihanCategory"
 export default function Category(){
   const [open,setOpen]=useState(0)

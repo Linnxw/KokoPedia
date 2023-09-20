@@ -1,15 +1,25 @@
 import {useParams,useNavigate} from "react-router-dom"
-import CardProduk from "../components/CardProduk"
+import CardProduk from "@components/CardProduk"
+import ProdukSkeleton from "@components/Skeleton/ProdukSkeleton"
 import {axiosJwt} from "../api/interceptor"
+import CardAkun from "@components/CardAkun"
+import MenuLayout from "../layout/MenuLayout"
+import {GoChecklist} from "react-icons/go"
+import {PiHandbagThin} from "react-icons/pi"
+import {RiCustomerService2Fill} from "react-icons/ri"
+import {PiUsersLight} from "react-icons/pi"
+import Button from "@components/Button"
 import {useProduk} from "../hooks/useProduk"
+import MenuBack from "@components/MenuBack"
+import PopUpLayout from "../layout/PopUpLayout"
 import {CiShoppingCart} from "react-icons/ci" 
-import FilterPopUp from "../components/FilterPopUp"
+import FilterPopUp from "@components/FilterPopUp"
 import pro from "/pro.png"
 import {AiOutlineArrowLeft} from "react-icons/ai"
 import {CiSearch} from "react-icons/ci"
 import {useEffect,useRef,useState} from "react"
-import CategoryList from "../components/CategoryList"
-import InfoAlamat from "../components/InfoAlamat"
+import CategoryList from "@components/CategoryList"
+import InfoAlamat from "@components/InfoAlamat"
 export default function ResultSearch(){
   const {search}=useParams()
   const url=`/produk/search?search=${search}`
@@ -131,7 +141,7 @@ export default function ResultSearch(){
      <span className="w-4 text-white font-inter h-4 text-[.5rem] text-semibold flex items-center justify-center rounded-full bg-red-500 absolute -right-2 -top-2">{keranjang}</span>
     <CiShoppingCart/>
     </span>
-    <div className="flex items-center w-4 h-6 flex-col justify-evenly">
+    <div className="flex items-center w-4 h-6 flex-col justify-evenly" onClick={()=>setIsOpen(prev=>!prev)}>
       <span className="bg-blackTxt inline-block w-full h-[2px] rounded"></span>
       <span className="bg-blackTxt inline-block w-full h-[2px] rounded"></span>
       <span className="bg-blackTxt inline-block w-full h-[2px] rounded"></span>
@@ -158,16 +168,38 @@ export default function ResultSearch(){
         height="h-36" 
         gap="gap-1" 
         level={pro}
-        initial={{y:'100vh',opacity:0}}
-        animate={{y:0,opacity:1}}
         />
          )
-     }) : (<p>{msg}</p>)
+     }) : (<ProdukSkeleton width="w-40"
+        height="h-36" 
+        gap="gap-1" 
+        cashback={true} 
+        level={pro} cards ={8}/>)
    }
   </div>
   {
     (<FilterPopUp open={isOpen} event={()=>setIsOpen(false)} eventFilter={handleFilterDetail} inputTerendah={handleInputTerendah} inputTertinggi={handleInputTertinggi}/>)
   }
+  
+    <PopUpLayout fixed={true} open={isOpen}>
+       <div className="h-full py-1 w-screen">
+        <MenuBack event={()=>setIsOpen(prev=>!prev)} title="Menu Utama"/>
+        <CardAkun/>
+        <MenuLayout title="Aktifitas Saya">
+          <Button title="Daftar Transaksi" icon={<GoChecklist/>}/>
+          <Button title="Mengikuti" icon={<PiUsersLight/>}/>
+          <Button title="Keranjang Saya" icon={<CiShoppingCart/>}/>
+        </MenuLayout>
+        <MenuLayout title="Semua Kategori">
+          <Button title="Kategori" icon={<PiHandbagThin/>}/>
+        </MenuLayout>
+        <MenuLayout title="Pusat Bantuan">
+          <Button 
+          title="Hubingi Kami" 
+          icon={<RiCustomerService2Fill/>}/>
+        </MenuLayout>
+       </div>
+    </PopUpLayout>
   </div>
   )
 }

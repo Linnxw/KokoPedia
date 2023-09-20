@@ -4,11 +4,12 @@ import {GoTrash} from "react-icons/go"
 import {useState,useEffect} from "react"
 import {axiosJwt} from "../../api/interceptor"
 import {convertRupiah} from "../../helper/convertRupiah"
-export default function CardToko({data, refresh}){
+export default function CardToko({beli,data, refresh}){
   const [count,setCount]=useState(data.jumlah)
   const [priece,setPriece]=useState(0)
   useEffect(()=>{
     setPriece(convertRupiah(data.harga))
+    console.log(data)
   },[])
   
   const deleteKeranjang=async()=>{
@@ -22,11 +23,32 @@ export default function CardToko({data, refresh}){
       console.log(err)
     }
   }
+  const handleChecked =({target}) =>{
+    if(target.checked){
+      beli({id:data.produk_id,jumlah:count})
+    }
+  }
+  
+  const handleJumlah = (type) =>{
+    switch (type) {
+      case 'increment':
+        if(count < data.stok){
+          setCount((prev=>prev+1))
+        }
+        break;
+      case 'dicrement':
+        if(count > 0){
+          setCount((prev=>prev-1))
+        }
+       break;
+      
+    }
+  }
   return (
-    <div className="w-screen border-b border-slate-400 py-2">
+    <div className="w-screen bg-white py-2">
       <div className="w-full items-center flex py-2 px-2">
        <div className="flex items-center justify-center relative z-20 overflow-hidden rounded h-5 bg-transparent m-2 w-5">
-        <input type="checkbox" className="form-checkbox appearance-none border border-blackTxt w-5 h-5 checked:border-none peer bg-transparent rounded static z-10"/>
+        <input type="checkbox" className="form-checkbox appearance-none border border-blackTxt w-5 h-5 checked:border-none peer bg-transparent rounded static z-10" onChange={handleChecked}/>
         <span className="absolute flex items-center justify-center hidden peer-checked:inline-block p-1 peer-checked:bg-greenPrimary text-sm text-white z-0"><FaCheck/></span>
        </div>
        <div className="flex text-sm flex-col">
@@ -59,9 +81,9 @@ export default function CardToko({data, refresh}){
          </div>
          <div>
            <div className="min-w-min h-6 flex rounded border border-slate-400 font-inter">
-             <div className="h-full w-5 rounded-l flex items-center justify-center text-lg" onClick={()=>setCount(count=>count-1)}>-</div>
+             <div className="h-full w-5 rounded-l flex items-center justify-center cursor-pointer text-lg" onClick={()=>handleJumlah("dicrement")}>-</div>
              <div className="h-full w-5 flex items-center justify-center">{count}</div>
-             <div className="text-greenPrimary text-lg h-full items-center flex justify-center w-5 rounded-r" onClick={()=>setCount(count=>count+1)}>+</div>
+             <div className="text-greenPrimary cursor-pointer text-lg h-full items-center flex justify-center w-5 rounded-r" onClick={()=>handleJumlah("increment")}>+</div>
            </div>
          </div>
          </div>

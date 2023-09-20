@@ -6,9 +6,11 @@ import {IoSettingsOutline} from "react-icons/io5"
 import {getMe} from "../../redux/slice/meSlice"
 import {useDispatch,useSelector} from "react-redux"
 import {MdArrowForwardIos} from "react-icons/md"
+import {useNavigate} from "react-router-dom"
 import {useEffect,useState} from "react"
 export default function index(){
   const dispatch=useDispatch()
+  const navigate = useNavigate()
   const {me,isLoading,msg}=useSelector(state=>state.me)
   useEffect(()=>{
     dispatch(getMe())
@@ -35,7 +37,7 @@ export default function index(){
         <p>Saldo Rp0</p>
       </div>
       </div>
-      <div className="w-16 h-full flex items-center justify-center text-2xl text-slate-600">
+      <div className="w-16 h-full flex items-center justify-center text-2xl text-slate-600" onClick={()=>navigate("/acount")}>
         <span><IoSettingsOutline/></span>
       </div>
     </div>

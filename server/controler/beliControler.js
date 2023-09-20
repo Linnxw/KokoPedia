@@ -49,7 +49,7 @@ export const getMyRiwayatJual=(req,res)=>{
 }
 
 export const beliProduk=(req,res)=>{
-const {jumlah}=req.body
+const {jumlah}=req.query
 let dataPembeli;
   db.query(`SELECT * FROM user WHERE email = '${req.email}'`,(err,result)=>{
     if(err)
