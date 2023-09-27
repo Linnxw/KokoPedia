@@ -1,11 +1,14 @@
 import MenuBack from "@components/MenuBack"
 import {useNavigate} from "react-router-dom"
+import withReactContent from 'sweetalert2-react-content'
 import CardKeranjang from "@components/CardKeranjang"
 import {useEffect,useState} from "react"
 import {axiosJwt} from "../api/interceptor"
 import KeranjangSkeleton from "../components/Skeleton/KeranjangSkeleton"
+import Swal from 'sweetalert2'
 import {motion} from "framer-motion"
 export default function Keranjang(){
+  const MySwal = withReactContent(Swal)
   const navigate=useNavigate()
  const [keranjang,setKeranjang]=useState(null)
  const [beli,setBeli] = useState(null)
@@ -22,12 +25,41 @@ export default function Keranjang(){
     }
   }
 const handleCheckBeli = (data) =>{
+  if(beli){
+  MySwal.fire({
+  title: 'Ganti product?',
+  text: "Kamu hanya bisa Checkout satu barang dalam satu waktu",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'ya,ganti Produk!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    setBeli(data)
+    MySwal.fire(
+      'mengganti!',
+      'Berhasil Mengganti product.',
+      'success'
+    )
+  }
+})
+  }else{
    setBeli(data)
+  }
  }
  
  const handleBeli = () =>{
-   console.log(beli)
-   navigate("/checkout/" + beli.id + "?jumlah=" + beli.jumlah)
+   if(beli){
+    navigate("/checkout/" + beli.id + "?jumlah=" + beli.jumlah)
+   }else{
+     MySwal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Anda belum memilih Produk!'
+    })
+   }
+
  }
   return (
     <div>
@@ -47,7 +79,7 @@ const handleCheckBeli = (data) =>{
      </div>
     </motion.div>
     <div className="w-screen fixed bottom-0 bg-whitePrimary flex h-16 items-center justify-center">
-        <button onClick={handleBeli} className={`rounded border bg-greenPrimary text-whitePrimary border border-greenPrimary font-inter font-bold text-[.8rem] text-greenPrimary w-[96%] text-center h-11 px-10`}>Beli Sekarang</button>
+        <button onClick={handleBeli} className={`rounded border ${beli ? "bg-greenPrimary text-whitePrimary" : "bg-whitePrimary text-greenPrimary"} border border-greenPrimary font-inter font-bold text-[.8rem] text-greenPrimary w-[96%] text-center h-11 px-10`}>Beli Sekarang</button>
       </div>
     </div>
     )

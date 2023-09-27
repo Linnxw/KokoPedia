@@ -10,6 +10,8 @@ import Search from "./pages/Search"
 import ResultSearch from "./pages/ResultSearch"
 import Checkout from "./pages/Checkout/"
 import ProdukDetail from "./pages/ProdukDetail"
+import AddProduk from "./pages/AddProduk"
+import AddFotoProduk from "./pages/AddFotoProduk"
 import Keranjang from "./pages/Keranjang"
 import {AnimatePresence} from "framer-motion"
 
@@ -31,6 +33,8 @@ function App() {
      <Route path="/keranjang" element={<Keranjang/>}/>
      <Route path="/checkout/:id" element={<Checkout/>}/>
      <Route path="/produk/:id" element={<ProdukDetail/>}/>
+     <Route path="/produk/add" element={<AddProduk/>}/>
+     <Route path="/produk/foto/add" element={<AddFotoProduk/>}/>
     </Routes>
    </AnimatePresence>
     </>

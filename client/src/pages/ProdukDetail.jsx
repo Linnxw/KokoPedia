@@ -31,6 +31,7 @@ import ProdukDetailSkeleton from "@components/Skeleton/ProdukDetailSkeleton"
 export default function ProdukDetail(){
   const [active,setActive]=useState(false)
   const [isOpen,setIsOpen]=useState(false)
+  const [isFollowing,setisFollowing]=useState(false)
   
   const [isAddKeranjang,setIsAddKeranjang] = useState(false)
   const [produk,setProduk]=useState(null)
@@ -62,7 +63,7 @@ export default function ProdukDetail(){
     if(data){
     const newData={
       ...data,
-      harga:convertRupiah(data[0]?.harga)
+      harga:convertRupiah(data?.harga)
     }
     setProduk(newData)
     }
@@ -70,7 +71,37 @@ export default function ProdukDetail(){
   
   useEffect(()=>{
     getComent()
+ 
   },[])
+  
+  useEffect(()=>{
+    if(data){
+      isFollowSeller()
+    }
+   
+  },[data])
+  const isFollowSeller = async () =>{
+    console.log({data,produk})
+    try{
+      const response = await axiosJwt.get("/user/follow")
+      const following = []
+      response.data.forEach((m,i)=>{
+        if(m.following_id){
+          following.push(m.following_id)
+        }else{
+          following.push(0)
+        }
+      })
+      console.log({following,id:data?.user_id})
+      if(following.includes(data?.user_id)){
+        setisFollowing(true)
+      }else{
+        setisFollowing(false)
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
   
   const getComent=async()=>{
     try{
@@ -195,7 +226,7 @@ export default function ProdukDetail(){
         </MenuLayout>
        </div>
     </PopUpLayout>
-    <CardPenjual data={produk}/>
+    <CardPenjual data={produk} isFollowing={isFollowing}/>
     <CardBeli beli={handleBeli} keranjang={handleAddKeranjang}/>
     {
       coment?.map((m,i)=>{

@@ -28,9 +28,13 @@ export const getCountFollow=(req,res)=>{
 }
 
 export const follow=(req,res)=>{
-const {following}=req.body
+const {following}=req.query
   db.query(`SELECT * FROM user WHERE email = '${req.email}'`,(err,result1)=>{
     db.query(`SELECT COUNT(follower_id) as follower FROM follows WHERE user_id = ${following} AND follower_id = ${result1[0].id}`,(err,result2)=>{
+      if(err){
+        console.log(err)
+        res.status(500).json({msg:err.message})
+      }
       if(result2[0].follower > 0){
        db.query(`DELETE FROM follows WHERE following_id = ${following} OR follower_id = ${result1[0].id}`,(err,result)=>{
          if(err)

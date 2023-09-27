@@ -1,9 +1,10 @@
 import db from "../config/Database.js"
 import moment from "moment"
 export const getRiwayatBeli=(req,res)=>{
-  db.query("SELECT id,nma_produk,ttl_harga,jumlah,url FROM riwayat_bl",(err,result)=>{
+  db.query("SELECT * FROM riwayat_bl",(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
+    console.log(result)
     res.status(200).json(result)
   })
 }
@@ -36,9 +37,14 @@ export const getDetailRiwayatJual=(req,res)=>{
 }
 
 export const getMyRiwayatBeli=(req,res)=>{
-  db.query(`SELECT id,nma_produk,ttl_harga,jumlah,url FROM riwayat_bl WHERE user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
+  db.query(`SELECT id,nma_produk,ttl_harga,jumlah,url,tgl FROM riwayat_bl WHERE user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
     if(err) return res.status(500).json({msg:err.message})
-    res.status(200).json(result)
+   let datas=[...result]
+   datas.forEach((m,i)=>{
+   const time = moment(m.tgl).format("YYYY-MM_DD HH:mm:ss")
+    datas[i].tgl=time
+   })
+    res.status(200).json(datas)
   })
 }
 export const getMyRiwayatJual=(req,res)=>{

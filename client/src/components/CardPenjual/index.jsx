@@ -2,7 +2,8 @@ import pro from "/pro.png"
 import gopay from "/gopay.png"
 import {useState,useEffect} from "react"
 import {instance} from "../../api/instance"
-export default function index({data}){
+import {axiosJwt} from "../../api/interceptor"
+export default function index({data,isFollowing}){
   const [follow,setFollow]=useState({})
   
   useEffect(()=>{
@@ -13,6 +14,15 @@ export default function index({data}){
     try{
       const response=await instance.get(`/user/follow/count/?userId=${data?.user_id}`)
       setFollow(response.data[0])
+    }catch(err){
+      console.log(err)
+    }
+  }
+  
+  const handleFollow = async () =>{
+    try{
+      await axiosJwt.post("user/follow?following="+data?.user_id)
+      getFollow()
     }catch(err){
       console.log(err)
     }
@@ -36,7 +46,7 @@ export default function index({data}){
         <p>{data?.alamat}</p>
       </div>
       </div>
-      <button className="rounded border border-greenPrimary bg-whitePrimary font-inter text-greenPrimary py-1 px-4">Follow</button>
+      <button onClick={handleFollow} className={`rounded border border-greenPrimary ${isFollowing ? "bg-greenPrimary text-white" : "bg-whitePrimary text-greenPrimary"} font-inter text-sm py-1 px-4`}>{isFollowing ? "UnFollow" : "Follow"}</button>
     </div>
     )
 }
