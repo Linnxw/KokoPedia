@@ -1,31 +1,41 @@
 import {useState,useEffect} from "react"
 import FormLayout from "../layout/FormLayout"
+import {axiosJwt} from "../api/interceptor"
+import {useParams} from "react-router-dom"
 import withReactContent from 'sweetalert2-react-content'
 import {RxCross2} from "react-icons/rx"
 import {BiSolidImageAlt} from "react-icons/bi"
 import Swal from 'sweetalert2'
-import {RiArrowDownSLine} from "react-icons/ri"
 import InputFile from "@components/InputFile"
 import {useNavigate} from "react-router-dom"
 export default function AddProduk(){ 
 const [image,setImage]=useState(null)
 const [url,setUrl]=useState(null)
 const navigate = useNavigate()
+const {id} = useParams()
 const MySwal = withReactContent(Swal)
 
-const handleAlamat=(e)=>{
-  setAlamat(e.target.value)
-}
-
-const handleSubmit =(e)=>{
+const handleSubmit = async (e) =>{
   e.preventDefault()
-  MySwal.fire(
-  'produk ditambahkan!',
-  'Lanjutkan untuk menambahkan foto Produkmu!',
-  'success'
-).then(()=>{
-  navigate("/produk/foto/add")
-})
+  try{
+    const data = new FormData()
+    data.append("file",image)
+    const addFoto = await axiosJwt.post("produk/foto/" + id,data,{
+      headers:{
+        "Content-Type":"multipart/form-data"
+      }
+    })
+    MySwal.fire(
+    'Succes menambhkan foto!',
+     'Kelola produk anda sekarang!',
+    'success'
+   ).then(()=>{
+     navigate("/")
+    })
+  }catch(err){
+    console.log(err)
+  }
+ 
 }
 
  const handleImageProduk = ({target}) =>{

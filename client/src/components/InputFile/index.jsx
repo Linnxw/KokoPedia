@@ -3,7 +3,6 @@ import {AiOutlineCloudUpload} from "react-icons/ai"
 export default function index({event,title,url}){
   const ref= useRef()
   const handleFile = () =>{
-    console.log(ref)
     ref.current.click()
   }
   return (
