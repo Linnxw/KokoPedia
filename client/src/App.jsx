@@ -34,7 +34,7 @@ function App() {
      <Route path="/checkout/:id" element={<Checkout/>}/>
      <Route path="/produk/:id" element={<ProdukDetail/>}/>
      <Route path="/produk/add" element={<AddProduk/>}/>
-     <Route path="/produk/foto/add" element={<AddFotoProduk/>}/>
+     <Route path="/produk/foto/add/:id" element={<AddFotoProduk/>}/>
     </Routes>
    </AnimatePresence>
     </>
