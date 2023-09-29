@@ -38,7 +38,7 @@ export const getUserById=(req,res)=>{
 }
 
 export const createUser=(req,res)=>{
-  const {nama,email,password,confPassword,fotoProfile,role,alamat}=req.body
+  const {nama,email,password,confPassword,role,alamat}=req.body
   let myRole;
   if(!role){
     myRole="user"

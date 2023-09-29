@@ -2,16 +2,20 @@ import Input from "@components/Input"
 import {useState,useEffect} from "react"
 import FormLayout from "../layout/FormLayout"
 import InputFile from "@components/InputFile"
+import {useNavigate} from "react-router-dom"
+import {instance} from "../api/instance"
 export default function Register(){
+const [error,setError] = useState(null)
 const [data,setData]=useState({
   nama:"",
   email:"",
   password:"",
   confPassword:"",
   alamat:"",
-  fotoProfile:""
+  file:""
 })
 const [preview,setPreview] = useState(null)
+const navigate = useNavigate()
 
 const handleChange = ({target}) =>{
   setData(prev=>{
@@ -25,9 +29,30 @@ const handleChange = ({target}) =>{
 const handleSubmit = async (e) =>{
   e.preventDefault()
   try{
-    console.log(data)
+    const formData = new FormData()
+    
+    const fields = ['nama','email','password','confPassword','file','alamat']
+    fields.forEach(field=>{
+       formData.append(field,data[field])
+    })
+    const register = await instance.post("/user",formData,{
+      headers:{
+        "Content-Type":"multipart-form-data"
+      }
+    })
+   setData({ nama:"",
+    email:"",
+    password:"",
+    confPassword:"",
+    alamat:"",
+    file:""})
+  
+  navigate("/login")
   }catch(err){
     console.log(err)
+    if(err.response){
+      setError(err.response.data.msg)
+    }
   }
 }
 
@@ -36,7 +61,7 @@ const handleFile = ({target}) =>{
     setData(prev=>{
       return {
         ...prev,
-      fotoProfile:target.files[0]
+      file:target.files[0]
       }
     })
     const url = URL.createObjectURL(target.files[0])
@@ -47,6 +72,7 @@ const handleFile = ({target}) =>{
   <div className="w-screen min-h-screen">
    <FormLayout type="register">
     <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-5">
+    <p className="text-red-400 text-sm">{error}</p>
      <Input name="nama" event={handleChange} type="teks" placeholder="Nama lengkap" input={data.nama}/>
      <Input name="email" event={handleChange} type="email" placeholder="Email" input={data.email}/>
      <Input name="password" event={handleChange} type="password" placeholder="Password" input={data.password}/>
