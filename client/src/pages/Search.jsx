@@ -15,7 +15,7 @@ export default function Search(){
   const [data,msg]=useProduk(`/produk/search?search=${input}`)
   
   const handleNavigate=()=>{
-    navigate("/home")
+    navigate(-1)
   }
   
   const handleSearch=(e)=>{

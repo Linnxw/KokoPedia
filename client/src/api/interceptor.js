@@ -1,12 +1,13 @@
 import axios from "axios";
 import { setToken } from "../redux/slice/tokenSlice";
+import {instance} from "./instance"
 import { useDispatch } from "react-redux";
 import store from "../redux/store"
 import jwt_decode from "jwt-decode"
 
 const getAccessToken = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/token",{withCredentials:true});
+    const response = await instance.get("/token",{withCredentials:true});
     store.dispatch(setToken(response.data.accesToken)); 
     return response.data.accesToken;
   } catch (err) {
@@ -30,7 +31,7 @@ const checkAccessToken = async () => {
 };
 
 export const axiosJwt = axios.create({
-  baseURL:"http://localhost:5000",
+  baseURL:"http://localhost:9797",
   withCredentials:true
 });
 

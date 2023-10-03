@@ -12,11 +12,9 @@ const {msg,token}=useSelector(prev=>prev.auth)
 const navigate=useNavigate()
 
 useEffect(()=>{
-console.log("use effect")
   if(token){
     navigate("/")
   }
-  console.log(token)
 },[dispath,msg,token,navigate])
 
 const handleEmail=(e)=>{
@@ -28,11 +26,12 @@ const handlePassword=(e)=>{
 const handleSubmit=(e)=>{
   e.preventDefault()
   const data={email,password}
+  console.log(data)
   dispath(login(data))
 }
   return (
   <div className="w-screen min-h-screen">
-   <FormLayout type="login">
+   <FormLayout type="login" event={()=>navigate("/register")}>
    <form className="w-full flex flex-col items-center gap-5" onSubmit={handleSubmit}>
      <p className="text-red-400">{msg}</p>
      <Input event={handleEmail} type="email" placeholder="Nomor HP atau Email" input={email}/>

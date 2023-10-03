@@ -20,9 +20,7 @@ export default function ProdukLain(){
   const handleNavigate=(id)=>{
     navigate(`/produk/${id}`)
   }
-  const ElementProduk = ()=>{
-    
-  }
+ 
   return (
     <div className="w-screen border-t-2 border-slate-200 font-noto mb-14">
      <div className="py-2 px-2 text-blackTxt font-bold">

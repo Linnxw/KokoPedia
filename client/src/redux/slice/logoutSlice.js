@@ -1,5 +1,5 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import axios from "axios"
+import {axiosJwt} from "../../api/interceptor"
 
 const initialState={
   msg:"",
@@ -9,12 +9,7 @@ const initialState={
 
 export const logout=createAsyncThunk("/logout",async(thunkAPI)=>{
   try{
-    const token=await axios.get("http://localhost:5000/token",{withCredentials:true})
-    const response=await axios.delete("http://localhost:5000/logout",{withCredentials:true},{
-     headers:{
-      'Authorization':`Bearer ${token.data.accesToken}`
-    }
-    })
+    const response=await axiosJwt.delete("/logout",{withCredentials:true})
     return response.data.msg
   }catch(err){
     return thunkAPI.rejectWithValue(err.response.data.msg)

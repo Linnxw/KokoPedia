@@ -3,6 +3,7 @@ import gopay from "/gopay.png"
 import avatar from "/avatar.webp"
 import promoGopay from "/promoGopay.png"
 import {IoSettingsOutline} from "react-icons/io5"
+import NotLogin from "../NotLogin"
 import {getMe} from "../../redux/slice/meSlice"
 import {useDispatch,useSelector} from "react-redux"
 import {MdArrowForwardIos} from "react-icons/md"
@@ -16,8 +17,10 @@ export default function index(){
     dispatch(getMe())
   },[])
   return (
-    <>
+    <div className="w-full h-full">
+    {!me && <NotLogin/>}
     <div className="w-screen px-2 h-20 flex items-center">
+   
       <div className="h-full flex items-center justify-center">
       <div className="rounded-full overflow-hidden w-16 h-16">
        <img src={me? me.url : avatar} className="h-full object-cover w-full"/>
@@ -42,15 +45,15 @@ export default function index(){
       </div>
     </div>
     <div className="w-screen h-16 flex items-center px-3 justify-between gap-3">
-     <div className="w-[48%] py-2 rounded-md text-sm font-noto text-blackTxt flex items-center justify-center gap-2 border border-slate-400">
+     <div onClick={()=>navigate("/produk/add")} className="w-[48%] py-2 rounded-md text-sm font-noto text-blackTxt flex items-center justify-center gap-2 border border-slate-400">
        <p>Jual Produk</p>
        <span className="text-md"><MdArrowForwardIos/></span>
      </div>
-     <div className="w-[48%] py-2 rounded-md text-sm font-noto text-blackTxt flex items-center justify-center gap-2 border border-slate-400">
+     <div onClick={()=>navigate("/")} className="w-[48%] py-2 rounded-md text-sm font-noto text-blackTxt flex items-center justify-center gap-2 border border-slate-400">
        <p>Kelola Produk</p>
        <span className="text-md"><MdArrowForwardIos/></span>
      </div>
     </div>
-    </>
+    </div>
     )
 }

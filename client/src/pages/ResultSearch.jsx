@@ -27,6 +27,7 @@ export default function ResultSearch(){
   const [active,setActive]=useState(false)
   const [keranjang,setKeranjang]=useState(0)
   const [isOpen,setIsOpen]=useState(false)
+  const [isOpenFilter,setIsOpenFilter]=useState(false)
   const [produk,setProduk]=useState([])
   const ref=useRef()
   const navigate=useNavigate()
@@ -59,6 +60,9 @@ export default function ResultSearch(){
     navigate("/search")
   }
   
+  const handleBack = () =>{
+    navigate(-1)
+  }
   const listCategory=["Filter","Oficial store","Cashback","Free ongkir"]
   
   const handleFilter=(m)=>{
@@ -74,14 +78,17 @@ export default function ResultSearch(){
         setProduk(data)
         break;
       case ('Filter'):
-        setIsOpen(prev=>!prev)
+        setIsOpenFilter(prev=>!prev)
         break;
     }
     setKategory(m)
   }
  
-  const handleFilterDetail=(type)=>{
+  const handleFilterDetail=(type,range)=>{
     switch (type) {
+      case "Terbaru":
+        window.location.reload()
+        break;
       case 'Terlaris':
         const terlaris=data.sort((a,b)=>b.terjual - a.terjual)
         setProduk(terlaris)
@@ -97,14 +104,14 @@ export default function ResultSearch(){
         setProduk(hargaTertinggi)
         setIsOpen(false)
       break;
-      case 'Mejobo':
-        const lokPilihan=data.filter(m=>m.alamat === "kirig")
-        console.log(lokPilihan)
-        setProduk(lokPilihan)
-        setIsOpen(false)
-    }
+    case 'Range harga':
+        const newData = data?.filter(m=>m.harga > range.min && m.harga < range.max)
+        console.log({data})
+        console.log({newData})
+        setProduk(newData)
+        break;
   }
-  
+  }
   const handleInputTerendah=(e)=>{
     console.log(e.target.value)
   }
@@ -127,7 +134,7 @@ export default function ResultSearch(){
   return (
   <div className="w-screen">
   <div className={`w-screen flex items-center justify-start font-noto tracking-wide text-blackTxt text-sm p-2 gap-2 z-40 top-0 bg-whitePrimary ${active ? "fixed" : "sticky"}`} ref={ref}>
-    <span className="text-3xl flex items-center justify-center text-slate-400" onClick={handleChange}><AiOutlineArrowLeft/></span>
+    <span className="text-3xl flex items-center justify-center text-slate-400" onClick={handleBack}><AiOutlineArrowLeft/></span>
     <div className="flex items-center text-grayTxt w-3/5 relative flex items-center justify-start" onClick={handleChange}>
       <input type="teks" className="absolute left-1 flex items-center text-slate-400 peer-focus " defaultValue={input}/>
       <div className={`absolute left-1 flex items-center ${input.length > 0 && "hidden"} peer-focus:hidden`}>
@@ -178,7 +185,7 @@ export default function ResultSearch(){
    }
   </div>
   {
-    (<FilterPopUp open={isOpen} event={()=>setIsOpen(false)} eventFilter={handleFilterDetail} inputTerendah={handleInputTerendah} inputTertinggi={handleInputTertinggi}/>)
+    (<FilterPopUp open={isOpenFilter} event={()=>setIsOpen(false)} eventFilter={handleFilterDetail} inputTerendah={handleInputTerendah} inputTertinggi={handleInputTertinggi}/>)
   }
   
     <PopUpLayout fixed={true} open={isOpen}>

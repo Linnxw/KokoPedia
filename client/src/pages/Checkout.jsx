@@ -48,7 +48,7 @@ export default function Checkout(props){
   transition={{duration:0.5}} 
   className="w-screen bg-slate-100">
     <div className="py-2 bg-white">
-     <MenuBack title="Pengiriman" center={false}/>
+     <MenuBack event={()=>navigate(-1)} title="Pengiriman" center={false}/>
     </div>
     {
       data ? (   <div className="w-full flex flex-col items-center gap-2">

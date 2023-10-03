@@ -8,7 +8,6 @@ const initialState={
 }
 
 export const getHistory=createAsyncThunk("get/gistory",async(thunkAPI)=>{
-  console.log("masuk getHistory")
   try{
     const response = await axiosJwt.get("/beli/riwayat/beli/me")
     return response.data

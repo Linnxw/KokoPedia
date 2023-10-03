@@ -1,6 +1,5 @@
 export default function Header({detail}){
 const tanggal=detail?.tgl?.replace("_","-")
-console.log(detail)
   return (
   <div className="font-noto text-blackTxt">
  

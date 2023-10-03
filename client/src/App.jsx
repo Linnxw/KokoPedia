@@ -8,6 +8,7 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Search from "./pages/Search"
 import ResultSearch from "./pages/ResultSearch"
+import EditProfile from "./pages/EditProfile"
 import Checkout from "./pages/Checkout/"
 import ProdukDetail from "./pages/ProdukDetail"
 import AddProduk from "./pages/AddProduk"
@@ -25,6 +26,7 @@ function App() {
      <Route path ="/home" element={<Home/>}/>
      <Route path ="/category" element={<Category/>}/>
      <Route path ="/acount" element={<Acount/>}/>
+     <Route path ="/acount/edit" element={<EditProfile/>}/>
      <Route path ="/history" element={<History/>}/>
      <Route path ="/login" element={<Login/>}/>
      <Route path="/register" element={<Register/>}/>

@@ -16,7 +16,7 @@ export default function HistoryLayout({children}){
   }
   return (
     <div className="sticky w-screen top-0 py-1">
-     <MenuBack title="Daftar Transaksi" center={false}/>
+     <MenuBack event={()=>navigate(-1)} title="Daftar Transaksi" center={false}/>
      <InputSearch 
      input={input} 
      handleSearch={handleSearch}

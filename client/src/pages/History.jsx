@@ -10,7 +10,7 @@ import {useEffect,useState} from "react"
 import CardHistory from "@components/CardHistory"
 import {useDispatch,useSelector} from "react-redux"
 export default function History(){
-  const [history,setHistory]=useState(true)
+  const [history,setHistory]=useState(null)
   const dispatch=useDispatch()
   const {data,msg,pending}=useSelector(state=>state.history)
    
@@ -18,9 +18,6 @@ export default function History(){
      dispatch(getHistory())
    },[])
   
-   useEffect(()=>{
-   console.log(data)
-   },[data])
   return (
   <motion.div
   initial={{opacity:0}}

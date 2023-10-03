@@ -1,21 +1,40 @@
 import Input from "@components/Input"
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import FormLayout from "../layout/FormLayout"
 import InputFile from "@components/InputFile"
 import {useNavigate} from "react-router-dom"
-import {instance} from "../api/instance"
-export default function Register(){
+import {axiosJwt} from "../api/interceptor"
+export default function EditProfile(){
 const [error,setError] = useState(null)
 const [data,setData]=useState({
   nama:"",
   email:"",
-  password:"",
-  confPassword:"",
   alamat:"",
-  file:""
+  file:"",
+  password:"",
+  confPassword:""
 })
 const [preview,setPreview] = useState(null)
 const navigate = useNavigate()
+
+useEffect(()=>{
+  getProfileUser()
+},[])
+
+const getProfileUser = async () =>{
+  try{
+    const profile = await axiosJwt.get("/user/me")
+  setData({
+      nama:profile.data.nama,
+      email:profile.data.email,
+      alamat:profile.data.alamat,
+      password:profile.data.password,
+      confPassword:profile.data.confPassword
+    })
+  }catch(err){
+    console.log(err)
+  }
+}
 
 const handleChange = ({target}) =>{
   setData(prev=>{
@@ -35,19 +54,21 @@ const handleSubmit = async (e) =>{
     fields.forEach(field=>{
        formData.append(field,data[field])
     })
-    const register = await instance.post("/user",formData,{
+    const profile = await axiosJwt.patch("/user",formData,{
       headers:{
         "Content-Type":"multipart-form-data"
       }
     })
-   setData({ nama:"",
+  setData({
+    nama:"",
     email:"",
-    password:"",
-    confPassword:"",
     alamat:"",
-    file:""})
+    file:"",
+    password:"",
+    confPassword:""
+  })
   
-  navigate("/login")
+  navigate("/acount")
   }catch(err){
     console.log(err)
     if(err.response){
@@ -68,9 +89,19 @@ const handleFile = ({target}) =>{
     setPreview(url)
   }
 }
+
+const handleRemoveImage = () =>{
+  setPreview("")
+  setData(prev=>{
+    return {
+      ...prev,
+      file:""
+    }
+  })
+}
   return (
   <div className="w-screen min-h-screen">
-   <FormLayout type="register" event={()=>navigate("/login")}>
+   <FormLayout type="edit">
     <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-5">
     <p className="text-red-400 text-sm">{error}</p>
      <Input name="nama" event={handleChange} type="teks" placeholder="Nama lengkap" input={data.nama}/>
@@ -78,8 +109,8 @@ const handleFile = ({target}) =>{
      <Input name="password" event={handleChange} type="password" placeholder="Password" input={data.password}/>
      <Input name="confPassword" event={handleChange} type="password" placeholder="Komfimasi Password" input={data.confPassword}/>
      <Input name="alamat" event={handleChange} type="textarea" placeholder="Alamat" input={data.alamat}/>
-     <InputFile title="Foto Profile" url={preview} event = {handleFile}/>
-     <button className="w-[80%] py-3 bg-greenPrimary rounded-md text-whitePrimary font-noto font-bold">Register</button>
+     <InputFile title="Foto Profile (Biarkan kosong jika tidak ingin mengganti)" url={preview} event = {handleFile} removeImage={handleRemoveImage}/>
+     <button className="w-[80%] py-3 bg-greenPrimary rounded-md text-whitePrimary font-noto font-bold">Masuk</button>
      </form>
    </FormLayout>
   </div>

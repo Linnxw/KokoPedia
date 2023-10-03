@@ -113,7 +113,7 @@ export default function ProdukDetail(){
   }
   
   const handleChange=()=>{
-    navigate("/home")
+    navigate(-1)
   }
   
   const handleInputTerendah=(e)=>{
@@ -209,20 +209,22 @@ export default function ProdukDetail(){
     </MenuLayout>
   </div>
   
-  <PopUpLayout open={isOpen}>
+  <PopUpLayout fixed={true} open={isOpen}>
        <div className="h-full py-1 w-screen">
         <MenuBack event={()=>setIsOpen(prev=>!prev)} title="Menu Utama"/>
         <CardAkun/>
         <MenuLayout title="Aktifitas Saya">
-          <Button title="Daftar Transaksi" icon={<GoChecklist/>}/>
-          <Button title="Mengikuti" icon={<PiUsersLight/>}/>
-          <Button title="Keranjang Saya" icon={<CiShoppingCart/>}/>
+          <Button event={()=>navigate('/history')} title="Daftar Transaksi" icon={<GoChecklist/>}/>
+          <Button event={()=>navigate('/')} title="Mengikuti" icon={<PiUsersLight/>}/>
+          <Button event={()=>navigate('/keranjang')} title="Keranjang Saya" icon={<CiShoppingCart/>}/>
         </MenuLayout>
         <MenuLayout title="Semua Kategori">
-          <Button title="Kategori" icon={<PiHandbagThin/>}/>
+          <Button event={()=>navigate('/category')} title="Kategori" icon={<PiHandbagThin/>}/>
         </MenuLayout>
         <MenuLayout title="Pusat Bantuan">
-          <Button title="Hubingi Kami" icon={<RiCustomerService2Fill/>}/>
+          <Button event={()=>navigate('/')}
+          title="Hubingi Kami" 
+          icon={<RiCustomerService2Fill/>}/>
         </MenuLayout>
        </div>
     </PopUpLayout>

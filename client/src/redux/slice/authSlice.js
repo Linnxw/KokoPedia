@@ -1,5 +1,5 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import axios from "axios"
+import {instance} from "../../api/instance"
 
 const initialState={
   msg:"",
@@ -11,7 +11,7 @@ const initialState={
 export const login=createAsyncThunk("login",async(data,thunkAPI)=>{
  
   try{
-    const response=await axios.post("http://localhost:5000/login",{
+    const response=await instance.post("/login",{
       email:data.email,
       password:data.password
     },{

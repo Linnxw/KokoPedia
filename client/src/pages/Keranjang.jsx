@@ -69,7 +69,7 @@ const handleCheckBeli = (data) =>{
     transition={{duration:0.5}}
     className="w-screen py-2 h-[1000px]">
   
-     <MenuBack title="Keranjang Saya" event={()=>navigate("/home")}/>
+     <MenuBack title="Keranjang Saya" event={()=>navigate(-1)}/>
      <div className="flex flex-col items-center gap-3 bg-slate-100">
      {
        keranjang ? (keranjang.map((data,i)=>{

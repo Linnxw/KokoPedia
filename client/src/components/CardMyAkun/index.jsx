@@ -5,11 +5,13 @@ import promoGopay from "/promoGopay.png"
 import {GoPencil} from "react-icons/go"
 import {BsShieldPlus} from "react-icons/bs"
 import {getMe} from "../../redux/slice/meSlice"
+import {useNavigate} from "react-router-dom"
 import {useDispatch,useSelector} from "react-redux"
 import {MdArrowForwardIos} from "react-icons/md"
 import {useEffect} from "react"
 export default function index(){
   const dispatch=useDispatch()
+  const navigate = useNavigate()
   const {me,isLoading,msg}=useSelector(state=>state.me)
   useEffect(()=>{
     dispatch(getMe())
@@ -32,7 +34,7 @@ export default function index(){
         </div>
       </div>
       </div>
-      <div className="w-16 h-full flex items-center justify-center text-2xl text-slate-600">
+      <div onClick={()=>navigate("/acount/edit")} className="w-16 h-full flex items-center justify-center text-2xl text-slate-600">
         <span><GoPencil/></span>
       </div>
     </div>

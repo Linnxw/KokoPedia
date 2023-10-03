@@ -48,6 +48,9 @@ const data=[
     getTotalPenjualan(data)
     getTotalPendapatan(data)
   }catch(err){
+    if(err.response.status === 401 || err.response.status === 403){
+      // navigate("/home")
+    }
     console.log(err)
   }
   }
@@ -72,9 +75,6 @@ const data=[
   const getHistory=async()=>{
     try{
       const response=await axiosJwt.get("/beli/riwayat/jual/me")
-      if(response.status === 401){
-        navigate("/login")
-      }
       setHistory(response.data)
     }catch(err){
       console.log(err)

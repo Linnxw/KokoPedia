@@ -18,30 +18,8 @@ initial={ opacity: 0},
 animate={ opacity: 1}
 }=props
 
-const alamat=(almt)=>{
-  let newAlamat=""
-  
-  for(let i = 0 ; i < almt.length ; i++){
-    newAlamat+=almt[i]
-    if(almt[i] === " "){
-      i = almt.length
-    }
-  }
-  return newAlamat
-}
-  
   const convertRupiah=(data)=>{
-    let rupiah=""
-    const strRupiah=data.toString()
-    
-    let counter=0
-    for(let i= strRupiah.length -1; i >= 0 ;i--){
-      rupiah=strRupiah[i] + rupiah
-      counter++
-      if(counter % 3 === 0 && i !== 0){
-        rupiah="." + rupiah
-      }
-    }
+    const rupiah = data.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
     return rupiah
   }
   
@@ -69,7 +47,7 @@ const alamat=(almt)=>{
      <p>{title}</p>
     </div>
     <div className="text-[.9rem] font-inter font-semibold tracking-wide">
-     <p>Rp {convertRupiah(harga)}</p>
+     <p>{convertRupiah(harga)}</p>
     </div>
     {
       cashback && (
@@ -82,7 +60,7 @@ const alamat=(almt)=>{
     <div className="flex items-center justify-center">
       <img src={level} className="w-4"/>
     </div>
-     <p>{alamat(kota)}</p>
+     <p>{kota}</p>
     </div>
     <div className="text-[.7rem] text-blackTxt tracking-wide">
      <p>Terjual {terjual}</p>
