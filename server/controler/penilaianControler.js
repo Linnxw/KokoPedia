@@ -1,13 +1,11 @@
-import db from "../config/Database.js"
-
-export const getPenilaian=(req,res)=>{
+const db = require("../config/Database.js") 
+const getPenilaian=(req,res)=>{
   db.query("SELECT * FROM penilaian",(err,result)=>{
     if(err) return res.status(500).json({msg:err.message})
     res.status(200).json(result)
   })
 }
-
-export const getPenilaianProduk=(req,res)=>{
+const getPenilaianProduk=(req,res)=>{
    db.query(`SELECT p.id,p.user_id,p.produk_id,p.komen,p.tgl,u.nama,u.email,u.url FROM penilaian as p JOIN user as u ON(u.id = p.user_id) WHERE p.produk_id = ${req.params.id}`,(err,result)=>{
     if(err) return res.status(500).json({msg:err.message})
     if(!result[0])
@@ -16,7 +14,7 @@ export const getPenilaianProduk=(req,res)=>{
   })
 }
 
-export const addPenilaian=(req,res)=>{
+const addPenilaian=(req,res)=>{
   db.query(`SELECT * FROM riwayat_bl WHERE id_produk = ${req.params.id} AND user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
 
     const now=new Date()
@@ -33,16 +31,18 @@ export const addPenilaian=(req,res)=>{
   })
 }
 
-export const editPenilaian=(req,res)=>{
+const editPenilaian=(req,res)=>{
   db.query(`UPDATE penilaian SET komen = '${req.body.komen}' WHERE id = ${req.params.id} AND user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
    if(err) return res.status(500).json({msg:err.message})
    res.status(200).json({msg:"berhasil edit penilaian"})
   })
 }
-export const deletePenilaian=(req,res)=>{
+const deletePenilaian=(req,res)=>{
   db.query(`DELETE FROM penilaian WHERE id = ${req.params.id} AND user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
    if(err) 
    return res.status(500).json({msg:err.message})
    res.status(200).json({msg:"berhasil menghapus penilaian"})
   })
 }
+
+module.exports = {deletePenilaian,getPenilaianProduk,getPenilaian,addPenilaian,editPenilaian}

@@ -1,6 +1,6 @@
-import express from "express"
-import {getKategori,getKategoriById,createKategori,deleteKategori} from "../controler/kategoryControler.js"
-import {verifyLogin} from "../middleware/verify.js"
+const express = require("express")
+const {getKategori,getKategoriById,createKategori,deleteKategori} = require("../controler/kategoryControler.js")
+const {verifyLogin} = require("../middleware/verify.js")
 const router=express.Router()
 
 router.get("/",getKategori)
@@ -9,4 +9,4 @@ router.use(verifyLogin)
 router.post("/",createKategori)
 router.delete("/:id",deleteKategori)
 
-export default router
+module.exports = router

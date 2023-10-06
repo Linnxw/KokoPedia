@@ -1,6 +1,6 @@
-import db from "../config/Database.js"
-import jwt from "jsonwebtoken"
-export const verifyLogin=(req,res,next)=>{
+const db = require("../config/Database.js")
+const jwt = require("jsonwebtoken")
+const verifyLogin=(req,res,next)=>{
   const header=req.headers.authorization
   const token=header && header.split(" ")[1]
   if(!token)
@@ -14,6 +14,8 @@ export const verifyLogin=(req,res,next)=>{
   })
 }
 
-export  const adminOnly=(req,res,next)=>{
+const adminOnly=(req,res,next)=>{
   req.role === "admin" ? next() : res.status(401).json({msg:"akses ditolak"})
 }
+
+module.exports = {adminOnly,verifyLogin}

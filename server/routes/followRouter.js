@@ -1,6 +1,6 @@
-import express from "express"
-import {getFollowUser,getFollowUserById,follow,getCountFollow} from "../controler/followControler.js"
-import {verifyLogin} from "../middleware/verify.js"
+const express = require("express")
+const {getFollowUser,getFollowUserById,follow,getCountFollow} = require("../controler/followControler.js")
+const {verifyLogin} = require("../middleware/verify.js")
 
 const router=express.Router()
 
@@ -10,4 +10,4 @@ router.use(verifyLogin)
 router.get("/",getFollowUser)
 router.post("/",follow)
 
-export default router
+module.exports = router

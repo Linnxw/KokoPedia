@@ -1,6 +1,6 @@
-import {getFotoProduk,getFotoProdukById,addFotoProduk,deleteFotoProduk} from "../controler/produkControler.js"
-import express from "express"
-import {verifyLogin} from "../middleware/verify.js"
+const {getFotoProduk,getFotoProdukById,addFotoProduk,deleteFotoProduk} = require("../controler/produkControler.js")
+const express = require("express")
+const {verifyLogin} = require("../middleware/verify.js")
 const router=express.Router()
 
 
@@ -10,4 +10,4 @@ router.use(verifyLogin)
 router.delete("/:id",deleteFotoProduk)
 router.post("/:id",addFotoProduk)
 
-export default router
+module.exports = router

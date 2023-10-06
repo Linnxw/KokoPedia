@@ -1,6 +1,7 @@
-import express from "express"
-import {getRiwayatBeli,getRiwayatJual,beliProduk,getDetailRiwayatBeli,getDetailRiwayatJual,getMyRiwayatBeli,getMyRiwayatJual} from "../controler/beliControler.js"
-import {verifyLogin,adminOnly} from "../middleware/verify.js"
+
+const {verifyLogin,adminOnly} = require("../middleware/verify.js")
+const {getRiwayatBeli,getRiwayatJual,beliProduk,getDetailRiwayatBeli,getDetailRiwayatJual,getMyRiwayatBeli,getMyRiwayatJual} = require("../controler/beliControler.js")
+const express = require("express") 
 const router=express.Router()
 
 router.use(verifyLogin)
@@ -12,4 +13,4 @@ router.get("/riwayat/jual",adminOnly,getRiwayatJual)
 router.get("/riwayat/jual/:id",getDetailRiwayatJual)
 router.post("/:id",beliProduk)
 
-export default router 
+module.exports= router 

@@ -1,8 +1,8 @@
-import db from "../config/Database.js"
-import jwt from "jsonwebtoken"
-import passwordHash from "password-hash"
+const db = require("../config/Database.js")
+const jwt = require("jsonwebtoken")
+const passwordHash = require("password-hash")
 
-export const LoginUser=(req,res)=>{
+const LoginUser=(req,res)=>{
   if(req.cookies.refreshToken)
   return res.status(500).json({msg:"anda masih dalam keadaan login"})
   
@@ -48,7 +48,7 @@ export const LoginUser=(req,res)=>{
   })
 }
 
-export const LogoutUser=(req,res)=>{
+const LogoutUser=(req,res)=>{
  const token=req.cookies.refreshToken
  if(!token)
  return res.status(401).json({msg:"anda belum login"})
@@ -69,7 +69,7 @@ export const LogoutUser=(req,res)=>{
   })
 }
 
-export const getAccesToken=(req,res)=>{
+const getAccesToken=(req,res)=>{
   const refreshToken=req.cookies.refreshToken
   
   if(!refreshToken)
@@ -97,3 +97,5 @@ export const getAccesToken=(req,res)=>{
   })
   })
 }
+
+module.exports = {LogoutUser,LoginUser,getAccesToken}

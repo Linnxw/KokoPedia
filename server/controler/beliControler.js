@@ -1,6 +1,6 @@
-import db from "../config/Database.js"
-import moment from "moment"
-export const getRiwayatBeli=(req,res)=>{
+const db = require("../config/Database.js")
+const  moment = require("moment")
+ const getRiwayatBeli=(req,res)=>{
   db.query("SELECT * FROM riwayat_bl",(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -8,7 +8,7 @@ export const getRiwayatBeli=(req,res)=>{
     res.status(200).json(result)
   })
 }
-export const getDetailRiwayatBeli=(req,res)=>{
+ const getDetailRiwayatBeli=(req,res)=>{
   db.query("SELECT * FROM riwayat_bl",(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -17,7 +17,7 @@ export const getDetailRiwayatBeli=(req,res)=>{
     res.status(200).json(data)
   })
 }
-export const getRiwayatJual=(req,res)=>{
+const getRiwayatJual=(req,res)=>{
   db.query("SELECT id,nma_produk,ttl_harga as ttl_jual,jumlah,url FROM riwayat_jl",(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -26,7 +26,7 @@ export const getRiwayatJual=(req,res)=>{
     res.status(200).json(result)
   })
 }
-export const getDetailRiwayatJual=(req,res)=>{
+const getDetailRiwayatJual=(req,res)=>{
   db.query(`SELECT r.id,r.id_produk,r.nma_produk,r.tgl,r.ttl_harga as ttl_jual,r.jumlah,r.url,r.nma_penjual,r.id_penjual,r.nma_pembeli,r.id_pembeli,r.user_id,p.berat FROM riwayat_jl as r JOIN produk as p ON (p.id = r.id_produk) WHERE r.id = ${req.params.id}`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -36,7 +36,7 @@ export const getDetailRiwayatJual=(req,res)=>{
   })
 }
 
-export const getMyRiwayatBeli=(req,res)=>{
+ const getMyRiwayatBeli=(req,res)=>{
   db.query(`SELECT id,nma_produk,ttl_harga,jumlah,url,tgl FROM riwayat_bl WHERE user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
     if(err) return res.status(500).json({msg:err.message})
    let datas=[...result]
@@ -47,14 +47,14 @@ export const getMyRiwayatBeli=(req,res)=>{
     res.status(200).json(datas)
   })
 }
-export const getMyRiwayatJual=(req,res)=>{
+const getMyRiwayatJual=(req,res)=>{
   db.query(`SELECT id,nma_produk,ttl_harga as ttl_jual,jumlah,url FROM riwayat_jl WHERE user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
     if(err) return res.status(500).json({msg:err.message})
     res.status(200).json(result)
   })
 }
 
-export const beliProduk=(req,res)=>{
+const beliProduk=(req,res)=>{
 const {jumlah}=req.query
 let dataPembeli;
   db.query(`SELECT * FROM user WHERE email = '${req.email}'`,(err,result)=>{
@@ -106,3 +106,5 @@ let dataPembeli;
     })
   })
 }
+
+module.exports = {getRiwayatBeli, getDetailRiwayatBeli,getRiwayatJual,getDetailRiwayatJual,getMyRiwayatJual,getMyRiwayatBeli,beliProduk}

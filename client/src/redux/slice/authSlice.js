@@ -11,12 +11,10 @@ const initialState={
 export const login=createAsyncThunk("login",async(data,thunkAPI)=>{
  
   try{
-    const response=await instance.post("/login",{
+    const response= await instance.post("/login",{
       email:data.email,
       password:data.password
-    },{
-    withCredentials:true
-   }) 
+    }) 
     
     return response.data
   }catch(err){

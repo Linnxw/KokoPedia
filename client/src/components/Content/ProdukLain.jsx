@@ -28,7 +28,7 @@ export default function ProdukLain(){
      </div>
      <div className="w-screen p-2 gap-x-2 gap-y-1 grid grid-cols-2 place-items-center">
      {
-       produk.length > 0 ? (produk.map((m,i)=>{
+       produk?.length > 0 ? (produk.map((m,i)=>{
          return <CardProduk key={m.id} cashback={true} title={m.nama_produk} img={m.url_foto_produk} kota={m.alamat} terjual={m.terjual} harga={m.harga} width="w-40" height="h-36" id={m.id} event={handleNavigate} gap="gap-1" level={pro}/>
        })) : (<ProdukSkeleton width="w-40" height="h-36" cashback={true} cards={6}/>)
      }

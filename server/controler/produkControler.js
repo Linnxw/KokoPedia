@@ -1,7 +1,7 @@
-import db from "../config/Database.js"
-import path from "path"
-import fs from "fs"
-export const getProduk=(req,res)=>{
+const db = require("../config/Database.js") 
+const path = require("path")
+const fs = require("fs")
+ const getProduk=(req,res)=>{
 
   db.query("SELECT p.id,p.nma_produk as nama_produk,p.warna,p.berat,p.harga,p.stok,p.deskripsi,p.terjual,p.user_id,p.kategori_id,u.nama,u.email,u.ft_prfl as foto_profil,u.url as url_foto_profil,u.alamat,k.nma_kategori as nama_kategori,fp.ft_prdk as foto_produk,fp.url as url_foto_produk FROM produk as p JOIN user as u ON (u.id = p.user_id) JOIN kategori as k ON(k.id = p.kategori_id) LEFT JOIN foto_produk as fp ON (fp.produk_id = p.id)",(err,result)=>{
     if(err){
@@ -12,7 +12,7 @@ export const getProduk=(req,res)=>{
   })
 }
 
-export const getProdukById=(req,res)=>{
+const getProdukById=(req,res)=>{
   db.query(`SELECT p.id,p.nma_produk as nama_produk,p.warna,p.berat,p.harga,p.stok,p.deskripsi,p.terjual,p.user_id,p.kategori_id,u.nama,u.alamat,u.email,u.ft_prfl as foto_profil,u.url as url_foto_profil,k.nma_kategori as nama_kategori,fp.ft_prdk as foto_produk,fp.url as url_foto_produk FROM produk as p JOIN user as u ON (u.id = p.user_id) JOIN kategori as k ON(k.id = p.kategori_id) LEFT JOIN foto_produk as fp ON (fp.produk_id = p.id) WHERE p.id = ${req.params.id}`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -20,7 +20,7 @@ export const getProdukById=(req,res)=>{
   })
 }
 
-export const getMyProduk=(req,res)=>{
+const getMyProduk=(req,res)=>{
 db.query(`SELECT p.id,p.nma_produk as nama_produk,p.warna,p.berat,p.harga,p.stok,p.deskripsi,p.terjual,p.user_id,p.kategori_id,u.nama,u.email,u.ft_prfl as foto_profil,u.url as url_foto_profil,k.nma_kategori as nama_kategori,fp.ft_prdk as foto_produk,fp.url as url_foto_produk FROM produk as p JOIN user as u ON (u.id = p.user_id) JOIN kategori as k ON(k.id = p.kategori_id) JOIN foto_produk as fp ON (fp.produk_id = p.id) WHERE user_id = (SELECT id FROM user WHERE email = '${req.email}')`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -28,7 +28,7 @@ db.query(`SELECT p.id,p.nma_produk as nama_produk,p.warna,p.berat,p.harga,p.stok
 })
 }
 
-export const createProduk=(req,res)=>{
+const createProduk=(req,res)=>{
   const {namaProduk,
     warna,
     berat,
@@ -53,7 +53,7 @@ export const createProduk=(req,res)=>{
   
 }
 
-export const editProduk=(req,res)=>{
+ const editProduk=(req,res)=>{
   const {namaProduk,
     warna,
     berat,
@@ -76,7 +76,7 @@ export const editProduk=(req,res)=>{
   })
 }
 
-export const deleteProduk=(req,res)=>{
+const deleteProduk=(req,res)=>{
 let userId;
   db.query(`SELECT * FROM user WHERE email = '${req.email}'`,(err,result)=>{
     if(err)
@@ -100,22 +100,21 @@ let userId;
   })
 }
 
-export const getFotoProduk=(req,res)=>{
+ const getFotoProduk=(req,res)=>{
   db.query("SELECT * FROM foto_produk",(err,result)=>{
     if(err)
     return res.status(200).json({msg:err.message})
     res.status(200).json(result)
   })
 }
-export const getFotoProdukById=(req,res)=>{
+ const getFotoProdukById=(req,res)=>{
   db.query(`SELECT * FROM foto_produk as f WHERE f.produk_id = ${req.params.id}`,(err,result)=>{
     if(err)
     return res.status(200).json({msg:err.message})
     res.status(200).json(result[0])
   })
 }
-
-export const addFotoProduk=(req,res)=>{
+ const addFotoProduk=(req,res)=>{
   if(!req.files)
   return res.status(400).json({msg:"tidak ada file yg dipilih"})
   if(req.files.file === null || req.files.file === undefined)
@@ -140,7 +139,7 @@ export const addFotoProduk=(req,res)=>{
    })
 }
 
-export const deleteFotoProduk=(req,res)=>{
+const deleteFotoProduk=(req,res)=>{
   db.query(`SELECT * FROM foto_produk WHERE id = ${req.params.id}`,(err,result1)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -154,7 +153,7 @@ export const deleteFotoProduk=(req,res)=>{
   
 }
 
-export const searchProduk=(req,res)=>{
+const searchProduk=(req,res)=>{
   const {search}=req.query
   if(search.length < 1)
   return res.status(400).json([])
@@ -169,4 +168,18 @@ export const searchProduk=(req,res)=>{
     }
     res.status(200).json(result)
   })
+}
+
+module.exports = {
+  getProduk,
+  getMyProduk,
+  getProdukById,
+  getFotoProdukById,
+  getFotoProduk,
+  createProduk,
+  editProduk,
+  deleteProduk,
+  addFotoProduk,
+  deleteFotoProduk,
+  searchProduk
 }

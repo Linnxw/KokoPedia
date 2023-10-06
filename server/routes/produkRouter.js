@@ -1,7 +1,7 @@
-import {getProduk,getProdukById,createProduk,editProduk,deleteProduk,getMyProduk,searchProduk} from "../controler/produkControler.js"
-import {getProdukByKategory} from "../controler/kategoryControler.js"
-import express from "express"
-import {verifyLogin} from "../middleware/verify.js"
+const {getProduk,getProdukById,createProduk,editProduk,deleteProduk,getMyProduk,searchProduk} = require("../controler/produkControler.js")
+const {getProdukByKategory} = require("../controler/kategoryControler.js")
+const express = require("express")
+const {verifyLogin} = require("../middleware/verify.js")
 const router=express.Router()
 
 router.get("/",getProduk)
@@ -14,4 +14,4 @@ router.post("/",createProduk)
 router.patch("/:id",editProduk)
 router.delete("/:id",deleteProduk)
 
-export default router
+module.exports = router

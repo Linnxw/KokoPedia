@@ -31,7 +31,7 @@ const checkAccessToken = async () => {
 };
 
 export const axiosJwt = axios.create({
-  baseURL:"http://localhost:9797",
+  baseURL:import.meta.env.VITE_API_BASE_URL,
   withCredentials:true
 });
 

@@ -1,17 +1,17 @@
-import express from "express"
-import dotenv from "dotenv"
-import cors from "cors"
-import userRouter from "./routes/userRouter.js"
-import followRouter from "./routes/followRouter.js"
-import kategoriRouter from "./routes/kategoriRouter.js"
-import beliRouter from "./routes/beliRouter.js"
-import AuthRouter from "./routes/AuthRouter.js"
-import produkRouter from "./routes/produkRouter.js"
-import fotoProdukRouter from "./routes/fotoProdukRouter.js"
-import keranjangRouter from "./routes/keranjangRouter.js"
-import penilaianRouter from "./routes/penilaianRouter.js"
-import cookieParser from "cookie-parser"
-import fileUpload from "express-fileupload"
+const express = require("express")
+const dotenv = require("dotenv")
+const cors = require("cors")
+const userRouter = require("./routes/userRouter.js")
+const followRouter = require("./routes/followRouter.js")
+const kategoriRouter = require("./routes/kategoriRouter.js")
+const beliRouter = require("./routes/beliRouter.js")
+const AuthRouter = require("./routes/AuthRouter.js")
+const produkRouter = require("./routes/produkRouter.js")
+const fotoProdukRouter = require("./routes/fotoProdukRouter.js")
+const keranjangRouter = require("./routes/keranjangRouter.js")
+const penilaianRouter = require("./routes/penilaianRouter.js")
+const cookieParser = require("cookie-parser")
+const fileUpload = require("express-fileupload")
 dotenv.config()
 
 const app=express()
@@ -22,15 +22,15 @@ app.use(fileUpload())
 app.use(express.static("./public"))
 app.use(cookieParser())
 
-app.use("/api/user/follow",followRouter)
-app.use("/api/user",userRouter)
-app.use("/api/kategori",kategoriRouter)
+app.use("/user/follow",followRouter)
+app.use("/user",userRouter)
+app.use("/kategori",kategoriRouter)
 app.use(AuthRouter)
-app.use("/api/produk/foto",fotoProdukRouter)
-app.use("/api/produk",produkRouter)
-app.use("/api/beli",beliRouter)
-app.use("/api/keranjang",keranjangRouter)
-app.use("/api/penilaian",penilaianRouter)
+app.use("/produk/foto",fotoProdukRouter)
+app.use("/produk",produkRouter)
+app.use("/beli",beliRouter)
+app.use("/keranjang",keranjangRouter)
+app.use("/penilaian",penilaianRouter)
 
 app.listen(process.env.PORT,()=>{
   console.log("server runing")

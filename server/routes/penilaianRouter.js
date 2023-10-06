@@ -1,6 +1,6 @@
-import express from "express"
-import {getPenilaian,addPenilaian,editPenilaian,deletePenilaian,getPenilaianProduk} from "../controler/penilaianControler.js"
-import {verifyLogin} from "../middleware/verify.js"
+const  express = require("express")
+const  {getPenilaian,addPenilaian,editPenilaian,deletePenilaian,getPenilaianProduk} = require("../controler/penilaianControler.js")
+const  {verifyLogin} = require("../middleware/verify.js")
 const router = express.Router()
 
 router.get("/",getPenilaian)
@@ -10,4 +10,4 @@ router.post("/:id",addPenilaian)
 router.patch("/:id",editPenilaian)
 router.delete("/:id",deletePenilaian)
 
-export default router
+module.exports = router

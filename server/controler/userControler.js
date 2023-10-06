@@ -1,9 +1,9 @@
-import db from "../config/Database.js"
-import fs from "fs"
-import path from "path"
-import {getCountFollow} from "./followControler.js"
-import passwordHash from "password-hash"
-export const getAllUser=(req,res)=>{
+const db = require("../config/Database.js")
+const fs = require("fs")
+const path = require("path")
+const {getCountFollow} = require("./followControler.js")
+const passwordHash = require("password-hash")
+const getAllUser=(req,res)=>{
     const sql="SELECT u.id,u.nama,u.email,u.alamat,u.ft_prfl,u.url,u.role FROM user as u"
     db.query(sql,(err,field)=>{
       if(err) return res.status(500).json({msg:err.message})
@@ -12,7 +12,7 @@ export const getAllUser=(req,res)=>{
 
 }
 
-export const getMe=(req,res)=>{
+const getMe=(req,res)=>{
     const sql=`SELECT u.id,u.nama,u.email,u.alamat,u.ft_prfl,u.url,u.role FROM user as u WHERE email = '${req.email}'`
     db.query(sql,(err,field)=>{
       if(err){
@@ -23,7 +23,7 @@ export const getMe=(req,res)=>{
 
 }
 
-export const getUserById=(req,res)=>{
+const getUserById=(req,res)=>{
  
     const sql=`SELECT id,nama,email,alamat,ft_prfl,url,role FROM user WHERE id = ${req.params.id}`
     db.query(sql,(err,field)=>{
@@ -37,7 +37,7 @@ export const getUserById=(req,res)=>{
 
 }
 
-export const createUser=(req,res)=>{
+const createUser=(req,res)=>{
   const {nama,email,password,confPassword,role,alamat}=req.body
   let myRole;
   if(!role){
@@ -83,7 +83,7 @@ export const createUser=(req,res)=>{
 
 }
 
-export const editUser=(req,res)=>{
+ const editUser=(req,res)=>{
  
    const {nama,email,password,confPassword,role,alamat}=req.body 
    if(password !== confPassword)
@@ -136,7 +136,7 @@ export const editUser=(req,res)=>{
 
 }
 
-export const deleteUser=(req,res)=>{
+ const deleteUser=(req,res)=>{
    db.query(`SELECT id,ft_prfl FROM user WHERE id = ${req.params.id}`,(err,result)=>{
       if(err)
       return res.status(500).json({msg:err.message})
@@ -149,7 +149,7 @@ export const deleteUser=(req,res)=>{
     })
 }
 
-export const searchUser=(req,res)=>{
+const searchUser=(req,res)=>{
   const sql=`SELECT * FROM user WHERE nama LIKE '%${req.params.search}%' or email LIKE '%${req.params.search}%'`
 
   db.query(sql,(err,result)=>{
@@ -161,3 +161,4 @@ export const searchUser=(req,res)=>{
   })
 }
 
+module.exports = {getMe,getUserById,getAllUser,createUser,editUser,deleteUser,searchUser}

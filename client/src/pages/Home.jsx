@@ -19,6 +19,7 @@ export default function Home(){
   const navigate = useNavigate()
   const handlePopUp=()=>{
     setIsOpen(prev=>!prev)
+    console.log(import.meta.env.VITE_API_BASE_URL)
   }
   
 return (

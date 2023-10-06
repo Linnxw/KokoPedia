@@ -1,6 +1,5 @@
-import db from "../config/Database.js"
-
-export const getKategori=(req,res)=>{
+const db = require("../config/Database.js") 
+const getKategori=(req,res)=>{
   db.query("SELECT * FROM kategori",(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -8,7 +7,7 @@ export const getKategori=(req,res)=>{
   })
 }
 
-export const getKategoriById=(req,res)=>{
+const getKategoriById=(req,res)=>{
   db.query(`SELECT * FROM kategori WHERE id = ${req.params.id}`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -18,7 +17,7 @@ export const getKategoriById=(req,res)=>{
   })
   
 }
-export const createKategori=(req,res)=>{
+ const createKategori=(req,res)=>{
   db.query(`SELECT * FROM kategori WHERE nma_kategori LIKE '%${req.body.namaKategori}%'`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -31,8 +30,7 @@ export const createKategori=(req,res)=>{
     })
   })
 }
-
-export const deleteKategori=(req,res)=>{
+const deleteKategori=(req,res)=>{
   db.query(`SELECT * FROM kategori WHERE id = ${req.params.id}`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -46,7 +44,7 @@ export const deleteKategori=(req,res)=>{
   })
 }
 
-export const getProdukByKategory=(req,res)=>{
+const getProdukByKategory=(req,res)=>{
   
   db.query(`SELECT p.id,p.nma_produk as nama_produk,p.warna,p.berat,p.harga,p.stok,p.deskripsi,p.terjual,p.user_id,p.kategori_id,u.nama,u.email,u.ft_prfl as foto_profil,u.url as url_foto_profil,u.alamat,k.nma_kategori as nama_kategori,fp.ft_prdk as foto_produk,fp.url as url_foto_produk FROM produk as p JOIN user as u ON (u.id = p.user_id) JOIN kategori as k ON(k.id = p.kategori_id) LEFT JOIN foto_produk as fp ON (fp.produk_id = p.id) WHERE k.nma_kategori = '${req.query.kategory}' ORDER BY p.terjual DESC LIMIT 10`,(err,result)=>{
     if(err){
@@ -58,3 +56,5 @@ export const getProdukByKategory=(req,res)=>{
     res.status(200).json(result)
   })
 }
+
+module.exports = {getProdukByKategory,getKategoriById,getKategori,createKategori,deleteKategori}

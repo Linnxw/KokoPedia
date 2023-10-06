@@ -1,6 +1,6 @@
-import db from "../config/Database.js"
+const db = require("../config/Database.js") 
 
-export const getFollowUser=(req,res)=>{
+const getFollowUser=(req,res)=>{
   db.query(`SELECT id FROM user WHERE email = '${req.email}'`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -12,14 +12,14 @@ export const getFollowUser=(req,res)=>{
   })
 }
 
-export const getFollowUserById=(req,res)=>{
+const getFollowUserById=(req,res)=>{
   db.query(`SELECT * FROM follows WHERE user_id = ${req.params.id}`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
     res.status(200).json(result)
   })
 }
-export const getCountFollow=(req,res)=>{
+const getCountFollow=(req,res)=>{
   db.query(`SELECT COUNT(follower_id) as follower,COUNT(following_id) as following FROM follows WHERE user_id = ${req.query.userId}`,(err,result)=>{
     if(err)
     return res.status(500).json({msg:err.message})
@@ -27,7 +27,7 @@ export const getCountFollow=(req,res)=>{
   })
 }
 
-export const follow=(req,res)=>{
+const follow=(req,res)=>{
 const {following}=req.query
   db.query(`SELECT * FROM user WHERE email = '${req.email}'`,(err,result1)=>{
     db.query(`SELECT COUNT(follower_id) as follower FROM follows WHERE user_id = ${following} AND follower_id = ${result1[0].id}`,(err,result2)=>{
@@ -71,3 +71,4 @@ const {following}=req.query
   })
 }
 
+module.exports = {follow,getCountFollow,getFollowUserById,getFollowUser}
